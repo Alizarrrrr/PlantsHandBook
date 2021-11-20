@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/layout/activity_main.xml" value="0.3255208333333333" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/layout/plant_item.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.28072916666666664" />
         <entry key="..\:/Users/Professional/AndroidStudioProjects/PlantsHandBook/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.28072916666666664" />
