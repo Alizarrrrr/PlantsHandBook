@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PlantsHandBook</string>
+    <string-array name="plant_a">
+        <item>Ромашка</item>
+        <item>Малина</item>
+        <item>Клубника</item>
+        <item>Ежевика</item>
+        <item>Рогоз</item>
+    </string-array>
+
+</resources>
