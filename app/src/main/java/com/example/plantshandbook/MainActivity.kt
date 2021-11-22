@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -35,7 +36,11 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         pickImag = PickImage(this@MainActivity, this, btnImgPick)
         setupView()
-        startProgress()
+        //startProgress()
+        openFrag(InputFragment.newInstance())
+
+
+
     }
 
     //handle requested permission result
@@ -84,5 +89,12 @@ class MainActivity : BaseActivity() {
 
         }
     }
+    private fun openFrag(f: Fragment){
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.place_holder, InputFragment.newInstance())
+            .commit()
+    }
+
 
 }
