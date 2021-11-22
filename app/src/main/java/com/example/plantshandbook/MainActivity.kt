@@ -36,10 +36,8 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         pickImag = PickImage(this@MainActivity, this, btnImgPick)
         setupView()
-        //startProgress()
-        openFrag(InputFragment.newInstance())
-
-
+       // startProgress()
+        openFrag(InputFragment.newInstance(), R.id.place_holder)
 
     }
 
@@ -89,12 +87,13 @@ class MainActivity : BaseActivity() {
 
         }
     }
-    private fun openFrag(f: Fragment){
+
+    private fun openFrag(f:Fragment, idHolder: Int){
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.place_holder, InputFragment.newInstance())
+            .replace(idHolder, f)
             .commit()
-    }
 
+    }
 
 }

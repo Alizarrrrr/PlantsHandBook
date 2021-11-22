@@ -1,14 +1,19 @@
 package com.example.plantshandbook
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_input.*
+import android.widget.Toast
+
 
 class InputFragment : Fragment() {
+
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,16 +21,17 @@ class InputFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_input, container, false)
+
     }
 
-    //override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    //    super.onViewCreated(view, savedInstanceState)
-    //}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Toast.makeText(getActivity(), "Frag+", Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = InputFragment()
-
     }
+
 }
