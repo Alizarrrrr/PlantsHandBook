@@ -17,8 +17,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : BaseActivity() {
+    lateinit var pickImag: PickImage
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
         R.drawable.plant1,
@@ -33,51 +33,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
+        pickImag = PickImage(this@MainActivity, this, btnImgPick)
         setupView()
-
-        btnImgPick.setOnClickListener {
-            //check runtime permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                    PackageManager.PERMISSION_DENIED){
-                    //permission denied
-                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-                    //show popup to request runtime permission
-                    requestPermissions(permissions, PERMISSION_CODE);
-                }
-                else{
-                    //permission already granted
-                    pickImageFromGallery();
-                }
-            }
-            else{
-                //system OS is < Marshmallow
-                pickImageFromGallery();
-            }
-        }
+        startProgress()
     }
 
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-    companion object {
-        //image pick code
-        private val IMAGE_PICK_CODE = 1000;
-        //Permission code
-        private val PERMISSION_CODE = 1001;
-    }
     //handle requested permission result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
-            PERMISSION_CODE -> {
+            PickImage.PERMISSION_CODE -> {
                 if (grantResults.size >0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED){
                     //permission from popup granted
-                    pickImageFromGallery()
+                    pickImag.pickImageFromGallery()
                 }
                 else{
                     //permission from popup denied
@@ -86,9 +55,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    //handle result of picked image
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE){
             imView.setImageURI(data?.data)
         }
     }

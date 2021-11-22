@@ -11,4 +11,23 @@
     <color name="lay">#FFFFFF</color>
     <color name="red">#FF1212</color>
     <color name="blue_bg">#4f4f89</color>
+
+    <color name="colorPrimary">#11161f</color>
+    <color name="colorPrimaryDark">#11161f</color>
+    <color name="colorAccent">#11161f</color>
+
+    <color name="white80">#ccffffff</color>
+    <color name="white50">#88ffffff</color>
+    <color name="white20">#33ffffff</color>
+    <color name="hint">#88ffffff</color>
+    <color name="green1">#00ffb7</color>
+    <color name="green_transparent">#6600ffb7</color>
+
+    <color name="blue1">#4c84ff</color>
+    <color name="blue1_transparent">#664c84ff</color>
+    <color name="blue1_transparent2">#884c84ff</color>
+
+    <color name="grey">#888</color>
+    <color name="grey1">#4f4f4f</color>
+    <color name="grey2">#111111</color>
 </resources>
