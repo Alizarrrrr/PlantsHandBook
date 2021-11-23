@@ -10,11 +10,6 @@ import android.widget.Toast
 
 class InputFragment : Fragment() {
 
-
-
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

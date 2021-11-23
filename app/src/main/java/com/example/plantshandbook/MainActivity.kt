@@ -15,16 +15,22 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Build
 import android.os.Build.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
+import java.io.*
 
 private const val FILE_NAME = "photo.jpg"
 private const val REQUEST_CODE = 42
@@ -42,7 +48,12 @@ class MainActivity : BaseActivity() {
     )
     private var index = 0
 
-    private lateinit var photoFile: File
+    private var photoFile: File? = null
+
+    private val CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 102
+    private val CAMERA_PERMISSION_REQUEST_CODE = 1
+    private var fileUri: Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +62,10 @@ class MainActivity : BaseActivity() {
         pickImag = PickImage(this@MainActivity, this, btnImgPick)
         setupView()
        // startProgress()
-        openFrag(InputFragment.newInstance(), R.id.place_holder)
+        //openFrag(InputFragment.newInstance(), R.id.place_holder)
+
         btnImgCamera.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            photoFile = getPhotoFile(FILE_NAME)
-            val fileProvider = FileProvider.getUriForFile(this, "com.example.fileprovider", photoFile)
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-            if (takePictureIntent.resolveActivity(this.packageManager) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_CODE)
-            } else {
-                Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
-            }
+            startCamera()
 
         }
 
@@ -73,7 +77,63 @@ class MainActivity : BaseActivity() {
     }
 
 
+    private fun startCamera() {
+        if (!(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
+                    || packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT))
+        ) {
+            Toast.makeText(this, "No Camera device", Toast.LENGTH_LONG).show()
+        } else {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                fileUri = getOutputMediaFileUri()
+                if (fileUri != null) {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri) // set the image file name
+                    // start the Photo Capture Intent
+                    startActivityForResult(intent, CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE)
+                }
+            } else {
+                requestPermissionForCamera()
+            }
+        }
+    }
 
+    private fun requestPermissionForCamera() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.CAMERA),
+            CAMERA_PERMISSION_REQUEST_CODE
+        )
+    }
+
+
+    private fun getOutputMediaFileUri(): Uri? {
+        val mediaStorageDir: File = getMediaFileDir()
+            ?: return null
+        // Create a media file name
+
+        photoFile =
+            File(mediaStorageDir.absolutePath + File.separator + System.currentTimeMillis() + "PHOTO_TEMP.jpg")
+        return FileProvider.getUriForFile(
+            this,
+            applicationContext.packageName + ".provider",
+            photoFile!!
+        )
+    }
+
+    fun getMediaFileDir(): File? {
+        val mediaStorageDir = File(applicationInfo.dataDir, "temp_photo")
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null
+            }
+        }
+        return mediaStorageDir
+    }
 
     //handle requested permission result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -90,6 +150,11 @@ class MainActivity : BaseActivity() {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
+            CAMERA_PERMISSION_REQUEST_CODE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startCamera()
+                }
+            }
         }
     }
 
@@ -98,12 +163,75 @@ class MainActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE){
             imView.setImageURI(data?.data)
         }
-        else if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-            imView.setImageBitmap(takenImage)
-        }
-        else {
-            super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            try {
+
+                val bfOptions = BitmapFactory.Options()
+                bfOptions.inDither = false
+                bfOptions.inPurgeable = true
+                bfOptions.inInputShareable = true
+                bfOptions.inTempStorage = ByteArray(32 * 1024)
+                val fileSize = photoFile!!.length().toInt()
+                val dIn = DataInputStream(FileInputStream(photoFile!!))
+                val buffer = ByteArray(fileSize)
+                while (dIn.read(buffer) != -1) {
+                }
+                val bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.size, bfOptions)
+                val exif = ExifInterface(photoFile!!.absolutePath)
+                val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL
+                )
+                var rotate = 0
+                when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270
+                    ExifInterface.ORIENTATION_ROTATE_180 -> rotate = 180
+                    ExifInterface.ORIENTATION_ROTATE_90 -> rotate = 90
+                }
+                val matrix = Matrix()
+                matrix.postRotate(rotate.toFloat())
+
+                val maxHeight = 1000
+                val maxWidth = 1000
+                val width = bitmap.width
+                val height = bitmap.height
+                if (height > width) {
+                    if (height > maxHeight || width > maxWidth) {
+                        val scale = Math.max(
+                            maxHeight.toFloat() / height.toFloat(),
+                            maxWidth.toFloat() / width.toFloat()
+                        )
+                        matrix.postScale(scale, scale)
+                    }
+                } else {
+                    if (height > maxWidth || width > maxHeight) {
+                        val scale = Math.max(
+                            maxWidth.toFloat() / height.toFloat(),
+                            maxHeight.toFloat() / width.toFloat()
+                        )
+                        matrix.postScale(scale, scale)
+                    }
+                }
+                val resizeBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
+                try {
+                    FileOutputStream(photoFile).use { out ->
+                        resizeBitmap.compress(
+                            Bitmap.CompressFormat.PNG,
+                            100,
+                            out
+                        ) // bmp is your Bitmap instance
+                    }
+
+                    Picasso.get().load(File(photoFile!!.absolutePath)).into(imView)
+
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 
