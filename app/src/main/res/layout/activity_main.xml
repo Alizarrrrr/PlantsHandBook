@@ -48,15 +48,23 @@
 
     <Button
         android:id="@+id/btnImgPick"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:backgroundTint="#535353"
         android:text="Image Pick"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
-        app:layout_constraintEnd_toEndOf="@+id/buttonAdd"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonAdd" />
+
+    <Button
+        android:id="@+id/btnImgCamera"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#535353"
+        android:text="Camera"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAdd" />
 
     <ImageView
         android:id="@+id/imView"
