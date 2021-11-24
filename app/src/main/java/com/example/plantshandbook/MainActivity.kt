@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
         pickImag = PickImage(this@MainActivity, this, btnImgPick)
         setupView()
        // startProgress()
-        //openFrag(InputFragment.newInstance(), R.id.place_holder)
+        openFrag(InputFragment.newInstance(), R.id.place_holder_main)
 
         btnImgCamera.setOnClickListener {
             startCamera()
@@ -236,9 +236,8 @@ class MainActivity : BaseActivity() {
     }
 
 
-
+    //adapter pickImage
     private fun setupView() {
-
 
         rcView.layoutManager = GridLayoutManager(this@MainActivity, 3)
         rcView.adapter = adapter
@@ -256,7 +255,7 @@ class MainActivity : BaseActivity() {
 
         }
     }
-
+// open Fragment
     private fun openFrag(f:Fragment, idHolder: Int){
         supportFragmentManager
             .beginTransaction()

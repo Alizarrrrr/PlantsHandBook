@@ -45,17 +45,17 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_width="42dp"
+                android:id="@+id/btn_del"
+                android:layout_width="59dp"
                 android:layout_height="52dp"
-                android:layout_marginHorizontal="32dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:gravity="center"
-                app:cornerRadius="18dp"
-                android:textSize="22sp"
+                android:layout_marginHorizontal="32dp"
                 android:backgroundTint="@color/red"
+                android:gravity="center"
                 android:text="x"
-                android:id="@+id/btn_del"/>
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:cornerRadius="18dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
