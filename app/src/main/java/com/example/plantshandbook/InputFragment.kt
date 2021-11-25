@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class InputFragment : Fragment() {
@@ -16,6 +18,8 @@ class InputFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_input, container, false)
+
+
 
     }
 
@@ -28,5 +32,7 @@ class InputFragment : Fragment() {
         @JvmStatic
         fun newInstance() = InputFragment()
     }
+
+
 
 }

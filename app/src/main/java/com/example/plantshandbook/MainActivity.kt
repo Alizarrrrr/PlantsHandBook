@@ -30,6 +30,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_input.*
 import java.io.*
 
 private const val FILE_NAME = "photo.jpg"
@@ -59,23 +61,29 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
-        pickImag = PickImage(this@MainActivity, this, btnImgPick)
-        setupView()
+
+
        // startProgress()
-        openFrag(InputFragment.newInstance(), R.id.place_holder_main)
+        openFrag(MainFragment.newInstance(), R.id.place_holder_main)
 
-        btnImgCamera.setOnClickListener {
-            startCamera()
 
+
+        btnAddImg.setOnClickListener{
+            openFrag(InputFragment.newInstance(), R.id.place_holder_main)
+            pickImag = PickImage(this@MainActivity, this, btnImgPick)
+            btnImgCamera.setOnClickListener {
+                startCamera()
+
+            }
         }
 
     }
-    private fun getPhotoFile(fileName: String): File {
+ /*   private fun getPhotoFile(fileName: String): File {
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
-
+*/
 
     private fun startCamera() {
         if (!(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
@@ -236,27 +244,9 @@ class MainActivity : BaseActivity() {
     }
 
 
-    //adapter pickImage
-    private fun setupView() {
 
-        rcView.layoutManager = GridLayoutManager(this@MainActivity, 3)
-        rcView.adapter = adapter
-
-        val plantName = resources.getStringArray(R.array.plant_a)
-        adapter.setPlantNames(plantName)
-
-        buttonAdd.setOnClickListener {
-            if (index > 4) {
-                index = 0
-            }
-            val plant = Plant(imageIdList[index], plantName[index])
-            adapter.addPlant(plant)
-            index++
-
-        }
-    }
 // open Fragment
-    private fun openFrag(f:Fragment, idHolder: Int){
+    fun openFrag(f:Fragment, idHolder: Int){
         supportFragmentManager
             .beginTransaction()
             .replace(idHolder, f)
