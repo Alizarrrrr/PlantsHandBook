@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
 
         btnAddImg.setOnClickListener{
             openFrag(InputFragment.newInstance(), R.id.place_holder_main)
-            pickImag = PickImage(this@MainActivity, this, btnImgPick)
+
             btnImgCamera.setOnClickListener {
                 startCamera()
 

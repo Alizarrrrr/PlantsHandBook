@@ -11,12 +11,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 
-class PickImage(val context: Context, val mActivity: Activity, val btn: Button) {
+class PickImage(val context: Context, val mFragment: Fragment, val btn: Button) {
     init {
         btnListener()
     }
@@ -31,7 +32,7 @@ class PickImage(val context: Context, val mActivity: Activity, val btn: Button) 
                     //permission denied
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
                     //show popup to request runtime permission
-                    mActivity.requestPermissions(permissions, PERMISSION_CODE);
+                    mFragment.requestPermissions(permissions, PERMISSION_CODE);
                 } else {
                     //permission already granted
                     pickImageFromGallery();
@@ -49,7 +50,7 @@ class PickImage(val context: Context, val mActivity: Activity, val btn: Button) 
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        mActivity.startActivityForResult(intent, IMAGE_PICK_CODE)
+        mFragment.startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
     companion object {
