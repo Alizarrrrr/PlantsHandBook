@@ -5,7 +5,6 @@
 package com.example.plantshandbook
 
 
-
 import android.graphics.Bitmap
 import android.os.Environment
 import android.provider.MediaStore
@@ -22,11 +21,15 @@ import android.os.Build
 import android.os.Build.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,6 +43,8 @@ private lateinit var photoFile: File
 
 class MainActivity : BaseActivity() {
     lateinit var pickImag: PickImage
+    private val dataModel: DataModel by viewModels()
+    private var switchFragInput: Boolean = false
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
         R.drawable.plant1,
@@ -49,6 +54,7 @@ class MainActivity : BaseActivity() {
         R.drawable.plant5
     )
     private var index = 0
+    var frag_run: Int = 0
 
     private var photoFile: File? = null
 
@@ -63,27 +69,35 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
 
-       // startProgress()
+        // startProgress()
         openFrag(MainFragment.newInstance(), R.id.place_holder_main)
 
-
-
-        btnAddImg.setOnClickListener{
+        dataModel.IndicatorbtnAddImg.observe(this,{
+            switchFragInput = it
+        })
+        if(switchFragInput == true){
+            dataModel.IndicatorbtnAddImg.value = false
             openFrag(InputFragment.newInstance(), R.id.place_holder_main)
-
-            btnImgCamera.setOnClickListener {
-                startCamera()
-
-            }
         }
 
-    }
- /*   private fun getPhotoFile(fileName: String): File {
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(fileName, ".jpg", storageDirectory)
-    }
+
+
+
+  /*      if (frag_run == 1) {
+            btnImgCamera.setOnClickListener {
+                startCamera()
+            }
+        }
 */
+
+
+    }
+    /*   private fun getPhotoFile(fileName: String): File {
+           // Use `getExternalFilesDir` on Context to access package-specific directories.
+           val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+           return File.createTempFile(fileName, ".jpg", storageDirectory)
+       }
+   */
 
     private fun startCamera() {
         if (!(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
@@ -144,16 +158,20 @@ class MainActivity : BaseActivity() {
     }
 
     //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
+        when (requestCode) {
             PickImage.PERMISSION_CODE -> {
-                if (grantResults.size >0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
                     //permission from popup granted
                     pickImag.pickImageFromGallery()
-                }
-                else{
+                } else {
                     //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -168,7 +186,7 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE) {
             imView.setImageURI(data?.data)
         }
 
@@ -244,15 +262,14 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-// open Fragment
-    fun openFrag(f:Fragment, idHolder: Int){
+    // open Fragment
+    fun openFrag(f: Fragment, idHolder: Int) {
         supportFragmentManager
             .beginTransaction()
             .replace(idHolder, f)
             .commit()
-
-
     }
+
+
 
 }

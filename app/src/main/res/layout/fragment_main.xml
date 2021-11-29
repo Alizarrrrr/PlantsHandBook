@@ -20,7 +20,8 @@
         tools:itemCount="3"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="1dp"
-        tools:listitem="@layout/plant_item" />
+        tools:listitem="@layout/plant_item"
+        app:layoutManager="LinearLayoutManager" />
 
     <Button
         android:id="@+id/btnAddPlant"

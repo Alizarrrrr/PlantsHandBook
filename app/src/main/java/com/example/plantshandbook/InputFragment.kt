@@ -30,7 +30,7 @@ class InputFragment : Fragment() {
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_input, container, false)
-        pickImag = PickImage(this, this, btnImgPick)
+        //pickImag = PickImage(requireContext(), this, btnImgPick)
 
 
     }
