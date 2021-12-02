@@ -1,6 +1,6 @@
 // подключение чтения из файла https://devofandroid.blogspot.com/2018/09/pick-image-from-gallery-android-studio_15.html (Pick an Image from the Gallery – Android Studio - Kotlin)
 // камера (простая, без Camera2) https://www.youtube.com/watch?v=DPHkhamDoyc       https://github.com/rpandey1234/CameraIntegration/blob/master/app/src/main/java/edu/stanford/rkpandey/cameraintegration/MainActivity.kt
-
+//https://developer.android.com/guide/fragments/communicate
 
 package com.example.plantshandbook
 
@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import android.Manifest
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -45,16 +46,6 @@ class MainActivity : BaseActivity() {
     lateinit var pickImag: PickImage
     private val dataModel: DataModel by viewModels()
     private var switchFragInput: Boolean = false
-    private val adapter = PlantAdapter()
-    private val imageIdList = listOf(
-        R.drawable.plant1,
-        R.drawable.plant2,
-        R.drawable.plant3,
-        R.drawable.plant4,
-        R.drawable.plant5
-    )
-    private var index = 0
-    var frag_run: Int = 0
 
     private var photoFile: File? = null
 
@@ -77,6 +68,7 @@ class MainActivity : BaseActivity() {
         })
         if(switchFragInput == true){
             dataModel.IndicatorbtnAddImg.value = false
+            Toast.makeText(this, "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
             openFrag(InputFragment.newInstance(), R.id.place_holder_main)
         }
 

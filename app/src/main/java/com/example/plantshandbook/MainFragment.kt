@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : Fragment() {
-    private val dataModel: DataModel by viewModels()
+    private val dataModel: DataModel by activityViewModels()
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
         R.drawable.plant1,
@@ -32,18 +33,12 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
 
-        setupView()
-
-
-
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Toast.makeText(getActivity(), "Frag+", Toast.LENGTH_SHORT).show()
-
+        //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
+        setupView()
         btnAddImg.setOnClickListener {
             dataModel.IndicatorbtnAddImg.value = true
         }
@@ -57,7 +52,7 @@ class MainFragment : Fragment() {
     //adapter pickImage
     private fun setupView() {
 
-        rcView.layoutManager = LinearLayoutManager(requireContext())//GridLayoutManager(this@MainFragment, 3)
+        rcView.layoutManager = GridLayoutManager(requireContext(), 3)//LinearLayoutManager(requireContext())
         rcView.adapter = adapter
 
         val plantName = resources.getStringArray(R.array.plant_a)
