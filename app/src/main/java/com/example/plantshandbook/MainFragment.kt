@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -40,7 +41,14 @@ class MainFragment : Fragment() {
         //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
         setupView()
         btnAddImg.setOnClickListener {
-            dataModel.IndicatorbtnAddImg.value = true
+            dataModel.IndicatorbtnAddImg.value=true
+            /* Toast.makeText(requireContext(), "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
+             dataModel.IndicatorbtnAddImg.observe(viewLifecycleOwner, Observer {set ->
+                 true
+             })
+
+             */
+
         }
     }
 

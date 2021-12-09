@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
@@ -45,7 +46,7 @@ private lateinit var photoFile: File
 class MainActivity : BaseActivity() {
     lateinit var pickImag: PickImage
     private val dataModel: DataModel by viewModels()
-    private var switchFragInput: Boolean = false
+    private var switchFragInput:Boolean = false
 
     private var photoFile: File? = null
 
@@ -61,13 +62,15 @@ class MainActivity : BaseActivity() {
 
 
         // startProgress()
-        openFrag(MainFragment.newInstance(), R.id.place_holder_main)
+       startFrag(MainFragment.newInstance(), R.id.place_holder_main)
 
         dataModel.IndicatorbtnAddImg.observe(this,{
             switchFragInput = it
+
         })
         if(switchFragInput == true){
             dataModel.IndicatorbtnAddImg.value = false
+            switchFragInput = false
             Toast.makeText(this, "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
             openFrag(InputFragment.newInstance(), R.id.place_holder_main)
         }
@@ -255,6 +258,12 @@ class MainActivity : BaseActivity() {
 
 
     // open Fragment
+    fun startFrag(f: Fragment, idHolder: Int) {
+        supportFragmentManager
+            .beginTransaction()
+            .add(idHolder, f)
+            .commit()
+    }
     fun openFrag(f: Fragment, idHolder: Int) {
         supportFragmentManager
             .beginTransaction()
@@ -262,6 +271,15 @@ class MainActivity : BaseActivity() {
             .commit()
     }
 
+
+
+ /*   fun openFragSave(f: Fragment, idHolder: Int){
+        supportFragmentManager.commit {
+            replace<f>(idHolder)
+            setReorderingAllowed(true)
+            addToBackStack("replacement")
+        }
+    } */
 
 
 }
