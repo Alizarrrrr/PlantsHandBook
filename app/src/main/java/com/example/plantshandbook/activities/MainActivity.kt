@@ -2,7 +2,7 @@
 // камера (простая, без Camera2) https://www.youtube.com/watch?v=DPHkhamDoyc       https://github.com/rpandey1234/CameraIntegration/blob/master/app/src/main/java/edu/stanford/rkpandey/cameraintegration/MainActivity.kt
 //https://developer.android.com/guide/fragments/communicate
 
-package com.example.plantshandbook
+package com.example.plantshandbook.activities
 
 
 import android.graphics.Bitmap
@@ -22,6 +22,10 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.plantshandbook.DataModel
+import com.example.plantshandbook.PickImage
+import com.example.plantshandbook.R
+import com.example.plantshandbook.fragments.FragmentManager
 import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
 import com.squareup.picasso.Picasso
@@ -51,17 +55,18 @@ class MainActivity : BaseActivity() {
 
 
         // startProgress()
-       startFrag(MainFragment.newInstance(), R.id.place_holder_main)
+        FragmentManager.setFragment(MainFragment.newInstance(), this)
+      // startFrag(MainFragment.newInstance(), R.id.place_holder_main)
 
-        dataModel.indicatorbtnAddImg.observe(this) {
+        dataModel.indicatorBtnAddImg.observe(this) {
             switchFragInput = it
 
         }
         if(switchFragInput){
-            dataModel.indicatorbtnAddImg.value = false
+            dataModel.indicatorBtnAddImg.value = false
             switchFragInput = false
             Toast.makeText(this, "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
-            openFrag(InputFragment.newInstance(), R.id.place_holder_main)
+            FragmentManager.setFragment(InputFragment.newInstance(), this)
         }
 
 

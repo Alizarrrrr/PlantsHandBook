@@ -1,10 +1,10 @@
 package com.example.plantshandbook.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.plantshandbook.DataModel
@@ -14,7 +14,7 @@ import com.example.plantshandbook.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
     private val dataModel: DataModel by activityViewModels()
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
@@ -25,6 +25,9 @@ class MainFragment : Fragment() {
         R.drawable.plant5
     )
     private var index = 0
+    override fun onClickNew() {
+
+    }
 
 
     override fun onCreateView(
@@ -41,9 +44,9 @@ class MainFragment : Fragment() {
         //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
         setupView()
         btnAddImg.setOnClickListener {
-            dataModel.indicatorbtnAddImg.value=true
-            /* Toast.makeText(requireContext(), "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
-             dataModel.IndicatorbtnAddImg.observe(viewLifecycleOwner, Observer {set ->
+            dataModel.indicatorBtnAddImg.value=true
+             Toast.makeText(requireContext(), "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
+            /* dataModel.IndicatorbtnAddImg.observe(viewLifecycleOwner, Observer {set ->
                  true
              })
 

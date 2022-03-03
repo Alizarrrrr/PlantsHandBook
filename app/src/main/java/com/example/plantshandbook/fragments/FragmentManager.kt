@@ -9,7 +9,7 @@ object FragmentManager {
 
     fun setFragment(newFrag: BaseFragment, activity: AppCompatActivity) {
         val transaction = activity.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.placeHolder, newFrag)
+        transaction.replace(R.id.place_holder_main, newFrag)
         transaction.commit()
         currentFrag = newFrag
     }

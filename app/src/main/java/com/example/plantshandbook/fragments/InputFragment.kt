@@ -11,7 +11,7 @@ import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 
 
-class InputFragment : Fragment() {
+class InputFragment : BaseFragment() {
 
     lateinit var pickImag: PickImage
     private val adapter = PlantAdapter()
@@ -22,6 +22,10 @@ class InputFragment : Fragment() {
         R.drawable.plant4,
         R.drawable.plant5
     )
+
+    override fun onClickNew() {
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
