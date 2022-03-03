@@ -106,6 +106,7 @@ class MainActivity : BaseActivity() {
                     // start the Photo Capture Intent
                     startActivityForResult(intent, CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE)
                 }
+
             } else {
                 requestPermissionForCamera()
             }
