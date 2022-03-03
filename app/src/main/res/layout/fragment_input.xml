@@ -10,7 +10,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     android:background="@color/black"
-    tools:context=".InputFragment">
+    tools:context=".fragments.InputFragment">
 
     <Button
         android:id="@+id/btnImgPick"

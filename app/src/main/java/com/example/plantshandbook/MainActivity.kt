@@ -6,36 +6,25 @@ package com.example.plantshandbook
 
 
 import android.graphics.Bitmap
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import android.Manifest
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
-import android.os.Build.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.GridLayoutManager
+import com.example.plantshandbook.fragments.InputFragment
+import com.example.plantshandbook.fragments.MainFragment
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_input.*
 import java.io.*
 
@@ -44,7 +33,7 @@ private const val REQUEST_CODE = 42
 private lateinit var photoFile: File
 
 class MainActivity : BaseActivity() {
-    lateinit var pickImag: PickImage
+    private lateinit var pickImag: PickImage
     private val dataModel: DataModel by viewModels()
     private var switchFragInput:Boolean = false
 
@@ -64,12 +53,12 @@ class MainActivity : BaseActivity() {
         // startProgress()
        startFrag(MainFragment.newInstance(), R.id.place_holder_main)
 
-        dataModel.IndicatorbtnAddImg.observe(this,{
+        dataModel.indicatorbtnAddImg.observe(this) {
             switchFragInput = it
 
-        })
-        if(switchFragInput == true){
-            dataModel.IndicatorbtnAddImg.value = false
+        }
+        if(switchFragInput){
+            dataModel.indicatorbtnAddImg.value = false
             switchFragInput = false
             Toast.makeText(this, "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
             openFrag(InputFragment.newInstance(), R.id.place_holder_main)
