@@ -1,14 +1,15 @@
 package com.example.plantshandbook.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
+import com.example.plantshandbook.activities.MainActivity
+import com.example.plantshandbook.dialogs.SaveImagDialog
+import kotlinx.android.synthetic.main.fragment_input.*
 
 
 class InputFragment : BaseFragment() {
@@ -34,14 +35,26 @@ class InputFragment : BaseFragment() {
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_input, container, false)
-        //pickImag = PickImage(requireContext(), this, btnImgPick)
+        pickImag = PickImage(requireContext(), this, btnSaveImg)
 
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(getActivity(), "Frag+", Toast.LENGTH_SHORT).show()
+
+        btnImgCamera.setOnClickListener {
+            (activity as MainActivity).startCamera()
+        }
+        btnSaveImg.setOnClickListener {
+            SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
+                override fun onClick(){
+                    TODO()!!!!!!!!!!!!
+                }
+            })
+        }
+
+
     }
 
     companion object {
@@ -49,6 +62,7 @@ class InputFragment : BaseFragment() {
         fun newInstance() = InputFragment()
     }
 
+    //btnImgPick
 
 
 }

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.Plant
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
+import com.example.plantshandbook.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -44,8 +44,13 @@ class MainFragment : BaseFragment() {
         //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
         setupView()
         btnAddImg.setOnClickListener {
-            dataModel.indicatorBtnAddImg.value=true
-             Toast.makeText(requireContext(), "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
+            (activity as MainActivity).navigate(InputFragment(), InputFragment::class.simpleName.toString())
+            //dataModel.indicatorBtnAddImg.value=true
+//            MainActivity.flagStartIn = 1
+//            FragmentManager.setFragment(InputFragment.newInstance(), (activity as MainActivity) )
+
+
+            // Toast.makeText(requireContext(), "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
             /* dataModel.IndicatorbtnAddImg.observe(viewLifecycleOwner, Observer {set ->
                  true
              })

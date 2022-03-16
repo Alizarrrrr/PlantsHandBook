@@ -13,12 +13,12 @@
     tools:context=".fragments.InputFragment">
 
     <Button
-        android:id="@+id/btnImgPick"
+        android:id="@+id/btnSaveImg"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#535353"
-        android:text="Image Pick"
+        android:text="Save Image"
         app:layout_constraintBottom_toTopOf="@+id/btnEndPick"
         app:layout_constraintStart_toStartOf="@+id/btnEndPick" />
 
@@ -36,7 +36,7 @@
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:layout_marginBottom="110dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnImgPick"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveImg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />

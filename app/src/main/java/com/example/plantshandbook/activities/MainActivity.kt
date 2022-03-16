@@ -17,6 +17,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -25,9 +26,9 @@ import androidx.fragment.app.Fragment
 import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
-import com.example.plantshandbook.fragments.FragmentManager
 import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
+import com.example.plantshandbook.utils.TimeManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_input.*
 import java.io.*
@@ -39,13 +40,15 @@ private lateinit var photoFile: File
 class MainActivity : BaseActivity() {
     private lateinit var pickImag: PickImage
     private val dataModel: DataModel by viewModels()
-    private var switchFragInput:Boolean = false
 
-    private var photoFile: File? = null
+    val internalStorageDir = getFilesDir();
+    var photoFile: File? = null
+    val CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 102
+    val CAMERA_PERMISSION_REQUEST_CODE = 1
+    var fileUri: Uri? = null
 
-    private val CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 102
-    private val CAMERA_PERMISSION_REQUEST_CODE = 1
-    private var fileUri: Uri? = null
+    var currentFragment: Fragment? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,40 +58,28 @@ class MainActivity : BaseActivity() {
 
 
         // startProgress()
-        FragmentManager.setFragment(MainFragment.newInstance(), this)
-      // startFrag(MainFragment.newInstance(), R.id.place_holder_main)
-
-        dataModel.indicatorBtnAddImg.observe(this) {
-            switchFragInput = it
-
-        }
-        if(switchFragInput){
-            dataModel.indicatorBtnAddImg.value = false
-            switchFragInput = false
-            Toast.makeText(this, "Button start INPUT FRAG", Toast.LENGTH_SHORT).show()
-            FragmentManager.setFragment(InputFragment.newInstance(), this)
-        }
 
 
+        navigate(MainFragment(), MainFragment::class.simpleName.toString())
 
 
-  /*      if (frag_run == 1) {
-            btnImgCamera.setOnClickListener {
-                startCamera()
-            }
-        }
-*/
 
 
     }
-    /*   private fun getPhotoFile(fileName: String): File {
+     private fun getPhotoFile(fileName: String): File {
            // Use `getExternalFilesDir` on Context to access package-specific directories.
            val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
            return File.createTempFile(fileName, ".jpg", storageDirectory)
        }
-   */
 
-    private fun startCamera() {
+
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
+    fun startCamera() {
         if (!(packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)
                     || packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT))
         ) {
@@ -138,6 +129,7 @@ class MainActivity : BaseActivity() {
 
     fun getMediaFileDir(): File? {
         val mediaStorageDir = File(applicationInfo.dataDir, "temp_photo")
+
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
@@ -252,29 +244,36 @@ class MainActivity : BaseActivity() {
     }
 
 
-    // open Fragment
-    fun startFrag(f: Fragment, idHolder: Int) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(idHolder, f)
-            .commit()
-    }
-    fun openFrag(f: Fragment, idHolder: Int) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(idHolder, f)
-            .commit()
-    }
 
 
+    fun navigate(fragment: Fragment?, tag: String) {
+        if (currentFragment != null && currentFragment?.tag == tag) return
 
- /*   fun openFragSave(f: Fragment, idHolder: Int){
-        supportFragmentManager.commit {
-            replace<f>(idHolder)
-            setReorderingAllowed(true)
-            addToBackStack("replacement")
+        val transaction = supportFragmentManager.beginTransaction()
+        if (fragment != null) {
+            currentFragment = fragment
+            transaction.replace(R.id.place_holder_main, fragment, tag)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
-    } */
+    }
+
+    fun saveImage(){
+        val nameImagInside:String = TimeManager.getCurrentTime()
+
+
+        File(photoFile!!.absolutePath)
+
+    }
+
+
+
+    companion object{
+        var flagStartIn = 0
+    }
+
+
+
 
 
 }
