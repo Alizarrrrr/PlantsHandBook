@@ -23,9 +23,11 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
+import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
 import com.example.plantshandbook.utils.TimeManager
@@ -48,6 +50,8 @@ class MainActivity : BaseActivity() {
     var fileUri: Uri? = null
 
     var currentFragment: Fragment? = null
+
+
 
 
 
@@ -258,10 +262,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
+
     fun saveImage(){
         val nameImagInside:String = TimeManager.getCurrentTime()
 
-
+        //MainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
         File(photoFile!!.absolutePath)
 
     }

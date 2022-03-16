@@ -19,5 +19,5 @@ interface Dao {
     suspend fun insertImage(note: ImageItem)
 
     @Update
-    suspend fun updateNote(note: ImageItem)
+    suspend fun updateImage(note: ImageItem)
 }
