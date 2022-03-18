@@ -10,6 +10,7 @@ import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_input.*
+import kotlinx.android.synthetic.main.save_image_dialog.*
 
 
 class InputFragment : BaseFragment() {
@@ -49,7 +50,11 @@ class InputFragment : BaseFragment() {
         btnSaveImg.setOnClickListener {
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
                 override fun onClick(){
-                    TODO()!!!!!!!!!!!!
+                    val nameObjectPhoto = edNameObjectPhoto.text.toString()
+                    (activity as MainActivity).saveImgAndroidQ()
+
+
+
                 }
             })
         }

@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -28,11 +29,13 @@ import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
 import com.example.plantshandbook.db.MainViewModel
+import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
 import com.example.plantshandbook.utils.TimeManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_input.*
+import kotlinx.android.synthetic.main.save_image_dialog.*
 import java.io.*
 
 private const val FILE_NAME = "photo.jpg"
@@ -50,6 +53,13 @@ class MainActivity : BaseActivity() {
     var fileUri: Uri? = null
 
     var currentFragment: Fragment? = null
+
+    var photoStorageDirPathName: String? = null
+
+
+    private val mainViewModel: MainViewModel {
+        MainViewModel.MainViewModelFactory((context?.Activity as MainApp).database)
+    }
 
 
 
@@ -141,6 +151,17 @@ class MainActivity : BaseActivity() {
             }
         }
         return mediaStorageDir
+    }
+
+    fun getMediaPhotoDir(): File? {
+        val photoStorageDir = File(applicationInfo.dataDir, "photo")
+        val namephotoStorageDir = photoStorageDir.absolutePath
+        if (!photoStorageDir.exists()) {
+            if (!photoStorageDir.mkdirs()) {
+                return null
+            }
+        }
+        return photoStorageDir
     }
 
     //handle requested permission result
@@ -262,13 +283,44 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun saveImgAndroidQ(): File? {
+        var photoStorageDir: File = getMediaPhotoDir()
+            ?: return null
+        val timeName =TimeManager.getCurrentTime()
+        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator + timeName)
+
+        getMediaPhotoDir()
+
+        val originalFileDir = File(photoFile!!.absolutePath).toString()
+        val originalFileName = File(photoFile!!.name).toString()
+
+        //copy file in new path with new name
+        return File(originalFileDir, originalFileName )
+            .copyTo(File(photoStorageDir, timeName), true)
+
+        //https://habr.com/ru/post/645465/
+        //https://stackoverflow.com/questions/9292954/how-to-make-a-copy-of-a-file-in-android
+
+        // write info db
+        val imageSave = ImageItem(
+            null,
+            edNameObjectPhoto.text.toString(),
+            photoStorageDirPathName!!
+        )
+        mainViewModel.insertImage(imageSave)
+
+
+
+
+    }
+
 
 
     fun saveImage(){
         val nameImagInside:String = TimeManager.getCurrentTime()
 
         //MainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
-        File(photoFile!!.absolutePath)
+
 
     }
 

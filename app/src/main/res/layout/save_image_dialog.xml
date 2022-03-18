@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/edNameObjectPhoto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -55,8 +55,8 @@
         android:layout_marginEnd="2dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
+        app:layout_constraintStart_toStartOf="@+id/edNameObjectPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/edNameObjectPhoto">
         <Button
             android:id="@+id/bSave"
             android:layout_width="wrap_content"
