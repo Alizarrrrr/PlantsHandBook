@@ -57,11 +57,13 @@ class MainActivity : BaseActivity() {
     var photoStorageDirPathName: String? = null
 
 
-    private val mainViewModel: MainViewModel {
-        MainViewModel.MainViewModelFactory((context?.Activity as MainApp).database)
+//    private val mainViewModel: MainViewModel {
+//        MainViewModel.MainViewModelFactory((context?.Activity as MainApp).database)
+//    }
+
+    private val mainViewModel: MainViewModel by viewModels{
+        MainViewModel.MainViewModelFactory((applicationContext as MainApp).database)
     }
-
-
 
 
 
@@ -294,6 +296,14 @@ class MainActivity : BaseActivity() {
         val originalFileDir = File(photoFile!!.absolutePath).toString()
         val originalFileName = File(photoFile!!.name).toString()
 
+        val imageSave = ImageItem(
+            null,
+            edNameObjectPhoto.text.toString(),
+            photoStorageDirPathName!!
+        )
+        mainViewModel.insertImage(imageSave)
+
+
         //copy file in new path with new name
         return File(originalFileDir, originalFileName )
             .copyTo(File(photoStorageDir, timeName), true)
@@ -302,12 +312,7 @@ class MainActivity : BaseActivity() {
         //https://stackoverflow.com/questions/9292954/how-to-make-a-copy-of-a-file-in-android
 
         // write info db
-        val imageSave = ImageItem(
-            null,
-            edNameObjectPhoto.text.toString(),
-            photoStorageDirPathName!!
-        )
-        mainViewModel.insertImage(imageSave)
+
 
 
 
