@@ -8,13 +8,14 @@ import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
+import com.example.plantshandbook.databinding.FragmentInputBinding
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_input.*
 import kotlinx.android.synthetic.main.save_image_dialog.*
 
 
 class InputFragment : BaseFragment() {
-
+    lateinit var binding:FragmentInputBinding
     lateinit var pickImag: PickImage
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
@@ -34,8 +35,9 @@ class InputFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding = FragmentInputBinding.inflate(inflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_input, container, false)
+        return binding.root
         pickImag = PickImage(requireContext(), this, btnSaveImg)
 
 
@@ -50,7 +52,7 @@ class InputFragment : BaseFragment() {
         btnSaveImg.setOnClickListener {
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
                 override fun onClick(){
-                    val nameObjectPhoto = edNameObjectPhoto.text.toString()
+                    //val nameObjectPhoto = edNameObjectPhoto.text.toString()
                     (activity as MainActivity).saveImgAndroidQ()
 
 

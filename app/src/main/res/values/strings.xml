@@ -15,5 +15,6 @@
     <string name="save_image_name">Write the name of the image</string>
     <string name="save_img">Save</string>
     <string name="cancel_save_img">Cancel</string>
+    <string name="hint_img_name">Image name</string>
 
 </resources>

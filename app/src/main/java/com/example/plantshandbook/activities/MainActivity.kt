@@ -28,6 +28,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
+import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.InputFragment
@@ -45,8 +46,9 @@ private lateinit var photoFile: File
 class MainActivity : BaseActivity() {
     private lateinit var pickImag: PickImage
     private val dataModel: DataModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
 
-    val internalStorageDir = getFilesDir();
+    //val internalStorageDir = getFilesDir();
     var photoFile: File? = null
     val CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 102
     val CAMERA_PERMISSION_REQUEST_CODE = 1
@@ -69,8 +71,9 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
 
         // startProgress()
@@ -295,6 +298,7 @@ class MainActivity : BaseActivity() {
 
         val originalFileDir = File(photoFile!!.absolutePath).toString()
         val originalFileName = File(photoFile!!.name).toString()
+
 
         val imageSave = ImageItem(
             null,

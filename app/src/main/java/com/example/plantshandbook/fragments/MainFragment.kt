@@ -11,10 +11,12 @@ import com.example.plantshandbook.Plant
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
+import com.example.plantshandbook.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class MainFragment : BaseFragment() {
+    lateinit var binding: FragmentMainBinding
     private val dataModel: DataModel by activityViewModels()
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
@@ -35,7 +37,8 @@ class MainFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
