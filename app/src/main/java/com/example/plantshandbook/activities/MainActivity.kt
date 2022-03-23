@@ -30,6 +30,7 @@ import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
+import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
@@ -291,25 +292,26 @@ class MainActivity : BaseActivity() {
     fun saveImgAndroidQ(): File? {
         var photoStorageDir: File = getMediaPhotoDir()
             ?: return null
-        val timeName =TimeManager.getCurrentTime()
-        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator + timeName)
+        val timeName =TimeManager.getCurrentTime()+".jpg"
+        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
 
         getMediaPhotoDir()
 
         val originalFileDir = File(photoFile!!.absolutePath).toString()
         val originalFileName = File(photoFile!!.name).toString()
+        val enteredName = findViewById(R.id.edNameObjectPhoto).text.toString()
 
 
         val imageSave = ImageItem(
             null,
-            edNameObjectPhoto.text.toString(),
-            photoStorageDirPathName!!
+            enteredName,
+            photoStorageDirPathName!!+timeName
         )
         mainViewModel.insertImage(imageSave)
 
 
         //copy file in new path with new name
-        return File(originalFileDir, originalFileName )
+        return File(originalFileDir)
             .copyTo(File(photoStorageDir, timeName), true)
 
         //https://habr.com/ru/post/645465/
