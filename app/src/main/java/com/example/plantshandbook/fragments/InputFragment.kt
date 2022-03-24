@@ -52,8 +52,9 @@ class InputFragment : BaseFragment() {
         btnSaveImg.setOnClickListener {
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
                 override fun onClick(){
-                    //val nameObjectPhoto = edNameObjectPhoto.text.toString()
-                    (activity as MainActivity).saveImgAndroidQ()
+
+
+                    (activity as MainActivity).saveImgControl()
 
 
 

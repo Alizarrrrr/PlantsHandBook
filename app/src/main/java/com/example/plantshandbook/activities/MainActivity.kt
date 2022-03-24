@@ -290,6 +290,7 @@ class MainActivity : BaseActivity() {
     }
 
     fun saveImgAndroidQ(): File? {
+
         var photoStorageDir: File = getMediaPhotoDir()
             ?: return null
         val timeName =TimeManager.getCurrentTime()+".jpg"
@@ -298,9 +299,7 @@ class MainActivity : BaseActivity() {
         getMediaPhotoDir()
 
         val originalFileDir = File(photoFile!!.absolutePath).toString()
-        val originalFileName = File(photoFile!!.name).toString()
-        val enteredName = findViewById(R.id.edNameObjectPhoto).text.toString()
-
+        //val originalFileName = File(photoFile!!.name).toString()
 
         val imageSave = ImageItem(
             null,
@@ -309,7 +308,6 @@ class MainActivity : BaseActivity() {
         )
         mainViewModel.insertImage(imageSave)
 
-
         //copy file in new path with new name
         return File(originalFileDir)
             .copyTo(File(photoStorageDir, timeName), true)
@@ -317,12 +315,15 @@ class MainActivity : BaseActivity() {
         //https://habr.com/ru/post/645465/
         //https://stackoverflow.com/questions/9292954/how-to-make-a-copy-of-a-file-in-android
 
-        // write info db
+    }
+    fun saveImgControl(){
+        if (photoFile != null){
+            saveImgAndroidQ()
+        }
+        else {
+            Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
 
-
-
-
-
+        }
     }
 
 
@@ -339,6 +340,7 @@ class MainActivity : BaseActivity() {
 
     companion object{
         var flagStartIn = 0
+        var enteredName = ""
     }
 
 

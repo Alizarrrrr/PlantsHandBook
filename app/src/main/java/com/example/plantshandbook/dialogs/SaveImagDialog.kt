@@ -3,6 +3,7 @@ package com.example.plantshandbook.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import com.example.plantshandbook.activities.MainActivity.Companion.enteredName
 import com.example.plantshandbook.databinding.SaveImageDialogBinding
 
 object SaveImagDialog {
@@ -13,6 +14,7 @@ object SaveImagDialog {
         builder.setView(binding.root)
         binding.apply {
             bSave.setOnClickListener {
+                enteredName = edNameObjectPhoto.text.toString()
                 listener.onClick()
                 dialog?.dismiss()
             }
