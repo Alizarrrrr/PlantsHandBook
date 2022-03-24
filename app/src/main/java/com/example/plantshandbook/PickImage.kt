@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 
-class PickImage(val context: Context, val mFragment: Fragment, val btn: Button) {
+class PickImage(val context: Context, val mFragment: Fragment, val btn: Button, val imgview:ImageView) {
     init {
         btnListener()
     }
@@ -51,11 +51,22 @@ class PickImage(val context: Context, val mFragment: Fragment, val btn: Button) 
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         mFragment.startActivityForResult(intent, IMAGE_PICK_CODE)
+        IMAGE_PICK_CODE_TRANSMIT = 1003
     }
+
+    fun createImView(){
+        if (IMAGE_PICK_CODE == 1003){
+            imgview.setImageURI(data?.data)
+        }
+    }
+
+
+
 
     companion object {
         //image pick code
         val IMAGE_PICK_CODE = 1000;
+        var IMAGE_PICK_CODE_TRANSMIT = 1002;
         //Permission code
         val PERMISSION_CODE = 1001;
     }

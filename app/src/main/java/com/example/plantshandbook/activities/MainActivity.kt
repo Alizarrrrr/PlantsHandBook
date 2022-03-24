@@ -10,7 +10,6 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -24,20 +23,17 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
-import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.ImageItem
-import com.example.plantshandbook.fragments.InputFragment
 import com.example.plantshandbook.fragments.MainFragment
 import com.example.plantshandbook.utils.TimeManager
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_input.*
-import kotlinx.android.synthetic.main.save_image_dialog.*
+import kotlinx.android.synthetic.main.fragment_camera.*
+import kotlinx.android.synthetic.main.fragment_gallery.*
 import java.io.*
 
 private const val FILE_NAME = "photo.jpg"
@@ -202,6 +198,13 @@ class MainActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE) {
             imView.setImageURI(data?.data)
         }
+
+
+ //       if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
+ //               imViewGallery.setImageURI(data?.data)
+ //       }
+        // https://ichi.pro/ru/ispol-zovanie-kamery-android-kotlin-i-galerea-280949141171262
+
 
         if (requestCode == CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             try {

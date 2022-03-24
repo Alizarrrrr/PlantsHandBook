@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/frameLayoutInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:background="@color/black"
+        tools:context=".fragments.GalleryFragment">
+
+        <Button
+            android:id="@+id/btnSaveImgGallery"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#535353"
+            android:text="Save Image"
+            app:layout_constraintBottom_toTopOf="@+id/btnEndPickGallery"
+            app:layout_constraintStart_toStartOf="@+id/btnEndPickGallery" />
+
+        <Button
+            android:id="@+id/btnPickImage"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#535353"
+            android:text="Gallery"
+            app:layout_constraintBottom_toTopOf="@+id/btnEndPickGallery"
+            app:layout_constraintEnd_toEndOf="@+id/btnEndPickGallery" />
+        <ImageView
+            android:id="@+id/imViewGallery"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginBottom="110dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSaveImgGallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <Button
+            android:id="@+id/btnEndPickGallery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="64dp"
+            android:backgroundTint="#535353"
+            android:text="Exit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

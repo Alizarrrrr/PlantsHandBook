@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.plantshandbook.DataModel
-import com.example.plantshandbook.Plant
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
@@ -46,8 +45,8 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
         setupView()
-        btnAddImg.setOnClickListener {
-            (activity as MainActivity).navigate(InputFragment(), InputFragment::class.simpleName.toString())
+        btnAddImgCamera.setOnClickListener {
+            (activity as MainActivity).navigate(CameraFragment(), CameraFragment::class.simpleName.toString())
             //dataModel.indicatorBtnAddImg.value=true
 //            MainActivity.flagStartIn = 1
 //            FragmentManager.setFragment(InputFragment.newInstance(), (activity as MainActivity) )
@@ -59,6 +58,10 @@ class MainFragment : BaseFragment() {
              })
 
              */
+
+        }
+        btnAddImgGallery.setOnClickListener{
+            (activity as MainActivity).navigate(GalleryFragment(), GalleryFragment::class.simpleName.toString())
 
         }
     }
@@ -77,7 +80,7 @@ class MainFragment : BaseFragment() {
         val plantName = resources.getStringArray(R.array.plant_a)
         adapter.setPlantNames(plantName)
 
-        btnAddPlant.setOnClickListener {
+       /* btnAddPlant.setOnClickListener {
             if (index > 4) {
                 index = 0
             }
@@ -85,7 +88,9 @@ class MainFragment : BaseFragment() {
             adapter.addPlant(plant)
             index++
 
-        }
+
+
+        }*/
 
     }
 

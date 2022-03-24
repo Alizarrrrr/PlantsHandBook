@@ -8,14 +8,14 @@ import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
-import com.example.plantshandbook.databinding.FragmentInputBinding
+import com.example.plantshandbook.databinding.FragmentCameraBinding
+
 import com.example.plantshandbook.dialogs.SaveImagDialog
-import kotlinx.android.synthetic.main.fragment_input.*
-import kotlinx.android.synthetic.main.save_image_dialog.*
+import kotlinx.android.synthetic.main.fragment_camera.*
 
 
-class InputFragment : BaseFragment() {
-    lateinit var binding:FragmentInputBinding
+class CameraFragment : BaseFragment() {
+    lateinit var binding:FragmentCameraBinding
     lateinit var pickImag: PickImage
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
@@ -35,7 +35,7 @@ class InputFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentInputBinding.inflate(inflater, container, false)
+        binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         return binding.root
         pickImag = PickImage(requireContext(), this, btnSaveImg)
@@ -61,13 +61,16 @@ class InputFragment : BaseFragment() {
                 }
             })
         }
+        btnEndPick.setOnClickListener {
+            (activity as MainActivity).navigate(MainFragment(), MainFragment::class.simpleName.toString())
+        }
 
 
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = InputFragment()
+        fun newInstance() = CameraFragment()
     }
 
     //btnImgPick
