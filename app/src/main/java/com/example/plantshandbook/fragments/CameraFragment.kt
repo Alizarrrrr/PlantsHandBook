@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
@@ -16,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_camera.*
 
 class CameraFragment : BaseFragment() {
     lateinit var binding:FragmentCameraBinding
-    lateinit var pickImag: PickImage
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
         R.drawable.plant1,
@@ -38,7 +36,7 @@ class CameraFragment : BaseFragment() {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         return binding.root
-        pickImag = PickImage(requireContext(), this, btnSaveImg)
+        //pickImag = PickImage(requireContext(), this, btnSaveImg, )
 
 
     }
@@ -52,12 +50,7 @@ class CameraFragment : BaseFragment() {
         btnSaveImg.setOnClickListener {
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
                 override fun onClick(){
-
-
                     (activity as MainActivity).saveImgControl()
-
-
-
                 }
             })
         }

@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
@@ -23,8 +24,6 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.plantshandbook.DataModel
-import com.example.plantshandbook.PickImage
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
@@ -41,9 +40,10 @@ private const val REQUEST_CODE = 42
 private lateinit var photoFile: File
 
 class MainActivity : BaseActivity() {
-    private lateinit var pickImag: PickImage
-    private val dataModel: DataModel by viewModels()
+
+   // private val dataModel: DataModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private var imageUri: Uri? = null
 
     //val internalStorageDir = getFilesDir();
     var photoFile: File? = null
@@ -120,6 +120,27 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun imagePicker(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permissions, PERMISSION_CODE)
+            } else{
+                chooseImageGallery();
+            }
+        }else{
+            chooseImageGallery();
+        }
+    }
+    private fun chooseImageGallery() {
+      //  val intent = Intent(Intent.ACTION_PICK)
+         val intent =Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+      //  intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_CHOOSE)
+
+
+    }
+
     private fun requestPermissionForCamera() {
         ActivityCompat.requestPermissions(
             this,
@@ -145,8 +166,6 @@ class MainActivity : BaseActivity() {
 
     fun getMediaFileDir(): File? {
         val mediaStorageDir = File(applicationInfo.dataDir, "temp_photo")
-
-
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
                 return null
@@ -157,7 +176,6 @@ class MainActivity : BaseActivity() {
 
     fun getMediaPhotoDir(): File? {
         val photoStorageDir = File(applicationInfo.dataDir, "photo")
-        val namephotoStorageDir = photoStorageDir.absolutePath
         if (!photoStorageDir.exists()) {
             if (!photoStorageDir.mkdirs()) {
                 return null
@@ -165,6 +183,8 @@ class MainActivity : BaseActivity() {
         }
         return photoStorageDir
     }
+
+
 
     //handle requested permission result
     override fun onRequestPermissionsResult(
@@ -174,7 +194,7 @@ class MainActivity : BaseActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            PickImage.PERMISSION_CODE -> {
+           /* PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
@@ -184,7 +204,7 @@ class MainActivity : BaseActivity() {
                     //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
-            }
+            }*/
             CAMERA_PERMISSION_REQUEST_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startCamera()
@@ -195,8 +215,12 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE) {
+       /* if (resultCode == Activity.RESULT_OK && requestCode == PickImage.IMAGE_PICK_CODE) {
             imView.setImageURI(data?.data)
+        }*/
+        if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
+            imageUri= data?.data
+            imViewGallery.setImageURI(imageUri)
         }
 
 
@@ -328,6 +352,22 @@ class MainActivity : BaseActivity() {
 
         }
     }
+    fun resaveGalleryImg(){
+        var photoStorageDir: File = getMediaPhotoDir()
+            ?: return null
+        val timeName =TimeManager.getCurrentTime()+".jpg"
+        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
+        photoFile =
+            File(photoStorageDirPathName!!+timeName + ".jpg")
+        return FileProvider.(
+
+        )
+
+
+        //val originalFileDir = imageUri?.path
+        //val originalFileDir = File(imageUri!!.absolutePath).toString()
+
+    }
 
 
 
@@ -344,6 +384,8 @@ class MainActivity : BaseActivity() {
     companion object{
         var flagStartIn = 0
         var enteredName = ""
+        private val IMAGE_CHOOSE = 1000;
+        private val PERMISSION_CODE = 1001;
     }
 
 
@@ -351,3 +393,32 @@ class MainActivity : BaseActivity() {
 
 
 }
+
+
+/*
+//work code
+override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PickImage.PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    //permission from popup granted
+                    pickImag.pickImageFromGallery()
+                } else {
+                    //permission from popup denied
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+            CAMERA_PERMISSION_REQUEST_CODE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startCamera()
+                }
+            }
+        }
+    }*/

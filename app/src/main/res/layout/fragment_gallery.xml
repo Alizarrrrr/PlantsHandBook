@@ -14,7 +14,7 @@
 
         <Button
             android:id="@+id/btnSaveImgGallery"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:backgroundTint="#535353"
@@ -24,7 +24,7 @@
 
         <Button
             android:id="@+id/btnPickImage"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:backgroundTint="#535353"
