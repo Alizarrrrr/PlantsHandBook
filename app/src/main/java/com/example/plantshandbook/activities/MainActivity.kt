@@ -13,12 +13,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.Matrix
+import android.icu.number.NumberFormatter.with
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -418,6 +420,9 @@ class MainActivity : BaseActivity() {
             finish();
         }
         System.exit(0);
+    }
+    fun imgView(path:String, imgView: ImageView){
+        Picasso.get().load(path).into(imgView)
     }
 
 
