@@ -5,24 +5,25 @@
 package com.example.plantshandbook.activities
 
 
-import android.graphics.Bitmap
-import android.provider.MediaStore
-import androidx.core.content.FileProvider
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
@@ -50,6 +51,7 @@ class MainActivity : BaseActivity() {
     val CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE = 102
     val CAMERA_PERMISSION_REQUEST_CODE = 1
     var fileUri: Uri? = null
+    private lateinit var bitmap: Bitmap
 
     var currentFragment: Fragment? = null
 
@@ -219,15 +221,34 @@ class MainActivity : BaseActivity() {
             imView.setImageURI(data?.data)
         }*/
         if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
+
             imageUri= data?.data
             imViewGallery.setImageURI(imageUri)
+
+            if (Build.VERSION.SDK_INT >= 29) {
+                val source = ImageDecoder.createSource(
+                    applicationContext.contentResolver,
+                    imageUri!!
+                )
+                try {
+                    bitmap = ImageDecoder.decodeBitmap(source)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } else {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(
+                        applicationContext.contentResolver,
+                        imageUri
+                    )
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+
+
         }
 
-
- //       if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
- //               imViewGallery.setImageURI(data?.data)
- //       }
-        // https://ichi.pro/ru/ispol-zovanie-kamery-android-kotlin-i-galerea-280949141171262
 
 
         if (requestCode == CAPTURE_PHOTO_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -326,8 +347,6 @@ class MainActivity : BaseActivity() {
         getMediaPhotoDir()
 
         val originalFileDir = File(photoFile!!.absolutePath).toString()
-        //val originalFileName = File(photoFile!!.name).toString()
-
         val imageSave = ImageItem(
             null,
             enteredName,
@@ -353,37 +372,51 @@ class MainActivity : BaseActivity() {
         }
     }
     fun resaveGalleryImg(){
-        var photoStorageDir: File = getMediaPhotoDir()
-            ?: return null
+        var photoStorageDir: File? = getMediaPhotoDir()
+            //?: return null
         val timeName =TimeManager.getCurrentTime()+".jpg"
         photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
         photoFile =
-            File(photoStorageDirPathName!!+timeName + ".jpg")
-        return FileProvider.(
+            File(photoStorageDirPathName!!+timeName )
 
+        val imageSave = ImageItem(
+            null,
+            enteredName,
+            photoStorageDirPathName!!+timeName
         )
+        mainViewModel.insertImage(imageSave)
+        return try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(photoFile)
+
+            // Compress the bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            // Flush the output stream
+            stream.flush()
+
+            // Close the output stream
+            stream.close()
+            Toast.makeText(this, "Image saved successful.", Toast.LENGTH_SHORT).show()
 
 
-        //val originalFileDir = imageUri?.path
-        //val originalFileDir = File(imageUri!!.absolutePath).toString()
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
+                //Toast.makeText(this, "Error to save image.", Toast.LENGTH_SHORT).show()
+
+        } as Unit
 
     }
 
 
 
-    fun saveImage(){
-        val nameImagInside:String = TimeManager.getCurrentTime()
 
-        //MainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
-
-
-    }
 
 
 
     companion object{
-        var flagStartIn = 0
-        var enteredName = ""
+        var flagStartIn = 0;
+        var enteredName = "";
         private val IMAGE_CHOOSE = 1000;
         private val PERMISSION_CODE = 1001;
     }
