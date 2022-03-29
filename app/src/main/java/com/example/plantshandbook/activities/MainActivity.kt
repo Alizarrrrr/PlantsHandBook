@@ -30,6 +30,7 @@ import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.MainFragment
+import com.example.plantshandbook.fragments.RedactFragment
 import com.example.plantshandbook.utils.TimeManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_camera.*
@@ -406,6 +407,17 @@ class MainActivity : BaseActivity() {
 
         } as Unit
 
+    }
+
+    fun stopApp(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            finishAffinity();
+        } else {
+            finish();
+        }
+        System.exit(0);
     }
 
 

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.FragmentGalleryBinding
 import com.example.plantshandbook.dialogs.SaveImagDialog
-import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 
@@ -52,7 +51,7 @@ class GalleryFragment : BaseFragment() {
 
 
         btnEndPickGallery.setOnClickListener {
-            (activity as MainActivity).navigate(MainFragment(), MainFragment::class.simpleName.toString())
+            (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
         }
     }
 

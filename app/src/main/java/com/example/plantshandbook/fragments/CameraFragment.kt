@@ -55,7 +55,7 @@ class CameraFragment : BaseFragment() {
             })
         }
         btnEndPick.setOnClickListener {
-            (activity as MainActivity).navigate(MainFragment(), MainFragment::class.simpleName.toString())
+            (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
         }
 
 
