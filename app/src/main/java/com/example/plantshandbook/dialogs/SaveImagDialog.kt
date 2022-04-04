@@ -3,6 +3,7 @@ package com.example.plantshandbook.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.example.plantshandbook.activities.MainActivity.Companion.enteredName
 import com.example.plantshandbook.databinding.SaveImageDialogBinding
 
@@ -14,9 +15,15 @@ object SaveImagDialog {
         builder.setView(binding.root)
         binding.apply {
             bSave.setOnClickListener {
-                enteredName = edNameObjectPhoto.text.toString()
-                listener.onClick()
-                dialog?.dismiss()
+
+                    enteredName = edNameObjectPhoto.text.toString()
+                if (enteredName != "") {
+                    listener.onClick()
+                    dialog?.dismiss()
+                }else{
+                    Toast.makeText(context, "Name empty", Toast.LENGTH_SHORT).show()
+
+                }
             }
             bCancel.setOnClickListener {
                 dialog?.dismiss()

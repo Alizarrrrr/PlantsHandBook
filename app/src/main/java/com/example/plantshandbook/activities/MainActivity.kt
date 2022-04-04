@@ -13,7 +13,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.Matrix
-import android.icu.number.NumberFormatter.with
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
@@ -32,8 +31,7 @@ import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.MainFragment
-import com.example.plantshandbook.fragments.RedactFragment
-import com.example.plantshandbook.utils.TimeManager
+import com.example.plantshandbook.utils.Base64CoderDecoder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -56,9 +54,11 @@ class MainActivity : BaseActivity() {
     var fileUri: Uri? = null
     private lateinit var bitmap: Bitmap
 
+
     var currentFragment: Fragment? = null
 
     var photoStorageDirPathName: String? = null
+
 
 
 //    private val mainViewModel: MainViewModel {
@@ -78,10 +78,12 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
 
+
         // startProgress()
 
 
         navigate(MainFragment(), MainFragment::class.simpleName.toString())
+
 
 
 
@@ -235,6 +237,7 @@ class MainActivity : BaseActivity() {
                 )
                 try {
                     bitmap = ImageDecoder.decodeBitmap(source)
+                    bitmapCheck = true
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -244,6 +247,7 @@ class MainActivity : BaseActivity() {
                         applicationContext.contentResolver,
                         imageUri
                     )
+                    bitmapCheck = true
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -325,6 +329,45 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun saveCameraShot(){
+        if (photoFile != null){
+            val imageSave = Base64CoderDecoder.encoderFile(photoFile!!)?.let {
+                ImageItem(
+                    null,
+                    enteredName,
+                    it
+                )
+            }
+            if (imageSave != null) {
+                mainViewModel.insertImage(imageSave)
+            }
+        }
+        else {
+            Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    fun saveGalleryImg(){
+        if (bitmapCheck){
+            val imageSave = Base64CoderDecoder.encoder(bitmap)?.let {
+                ImageItem(
+                    null,
+                    enteredName,
+                    it
+                )
+            }
+            if (imageSave != null) {
+                mainViewModel.insertImage(imageSave)
+            }
+        }
+        else {
+            Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+
 
 
 
@@ -340,76 +383,18 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun saveImgAndroidQ(): File? {
-
-        var photoStorageDir: File = getMediaPhotoDir()
-            ?: return null
-        val timeName =TimeManager.getCurrentTime()+".jpg"
-        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
-
-        getMediaPhotoDir()
-
-        val originalFileDir = File(photoFile!!.absolutePath).toString()
-        val imageSave = ImageItem(
-            null,
-            enteredName,
-            photoStorageDirPathName!!+timeName
-        )
-        mainViewModel.insertImage(imageSave)
-
-        //copy file in new path with new name
-        return File(originalFileDir)
-            .copyTo(File(photoStorageDir, timeName), true)
-
-        //https://habr.com/ru/post/645465/
-        //https://stackoverflow.com/questions/9292954/how-to-make-a-copy-of-a-file-in-android
+    fun switchDelWritedb(){
 
     }
-    fun saveImgControl(){
-        if (photoFile != null){
-            saveImgAndroidQ()
-        }
-        else {
-            Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
-
-        }
-    }
-    fun resaveGalleryImg(){
-        var photoStorageDir: File? = getMediaPhotoDir()
-            //?: return null
-        val timeName =TimeManager.getCurrentTime()+".jpg"
-        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
-        photoFile =
-            File(photoStorageDirPathName!!+timeName )
-
-        val imageSave = ImageItem(
-            null,
-            enteredName,
-            photoStorageDirPathName!!+timeName
-        )
-        mainViewModel.insertImage(imageSave)
-        return try {
-            // Get the file output stream
-            val stream: OutputStream = FileOutputStream(photoFile)
-
-            // Compress the bitmap
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-
-            // Flush the output stream
-            stream.flush()
-
-            // Close the output stream
-            stream.close()
-            Toast.makeText(this, "Image saved successful.", Toast.LENGTH_SHORT).show()
 
 
-        } catch (e: IOException){ // Catch the exception
-            e.printStackTrace()
-                //Toast.makeText(this, "Error to save image.", Toast.LENGTH_SHORT).show()
 
-        } as Unit
 
-    }
+
+
+
+
+
 
     fun stopApp(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -431,11 +416,15 @@ class MainActivity : BaseActivity() {
 
 
 
+
+
     companion object{
         var flagStartIn = 0;
         var enteredName = "";
         private val IMAGE_CHOOSE = 1000;
         private val PERMISSION_CODE = 1001;
+        var bitmapCheck = false;
+
     }
 
 
@@ -471,4 +460,41 @@ override fun onRequestPermissionsResult(
                 }
             }
         }
+    }*/
+
+/* fun resaveGalleryImg(){
+        var photoStorageDir: File? = getMediaPhotoDir()
+            //?: return null
+        val timeName =TimeManager.getCurrentTime()+".jpg"
+        photoStorageDirPathName = (photoStorageDir.toString()+ File.separator)
+        photoFile =
+            File(photoStorageDirPathName!!+timeName )
+
+        val imageSave = ImageItem(
+            null,
+            enteredName,
+            photoStorageDirPathName!!+timeName
+        )
+        mainViewModel.insertImage(imageSave)
+        return try {
+            // Get the file output stream
+            val stream: OutputStream = FileOutputStream(photoFile)
+
+            // Compress the bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            // Flush the output stream
+            stream.flush()
+
+            // Close the output stream
+            stream.close()
+            Toast.makeText(this, "Image saved successful.", Toast.LENGTH_SHORT).show()
+
+
+        } catch (e: IOException){ // Catch the exception
+            e.printStackTrace()
+                //Toast.makeText(this, "Error to save image.", Toast.LENGTH_SHORT).show()
+
+        } as Unit
+
     }*/

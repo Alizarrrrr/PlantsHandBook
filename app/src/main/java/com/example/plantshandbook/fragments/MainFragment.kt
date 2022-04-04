@@ -30,9 +30,7 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        /*
-        btnStartGame.setOnClickListener{
 
-        }
 
 
         btnList.setOnClickListener{
@@ -44,6 +42,10 @@ class MainFragment : BaseFragment() {
         }
 
         */
+        btnStartGame.setOnClickListener{
+            (activity as MainActivity).navigate(GameFragment(), GameFragment::class.simpleName.toString())
+
+        }
 
         btnRedact.setOnClickListener{
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())

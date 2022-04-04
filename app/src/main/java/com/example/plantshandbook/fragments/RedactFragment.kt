@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.plantshandbook.DataModel
 import com.example.plantshandbook.ListImageAdapter
-import com.example.plantshandbook.PlantAdapter
-import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.activities.MainApp
 
@@ -64,6 +60,7 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
             )
 
         }
+
         btnExit.setOnClickListener {
             (activity as MainActivity).navigate(
                 MainFragment(),

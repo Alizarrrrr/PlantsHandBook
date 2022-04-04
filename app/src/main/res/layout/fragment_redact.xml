@@ -12,28 +12,16 @@
     app:layout_constraintTop_toBottomOf="parent"
     tools:context=".fragments.CameraFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcView"
-        layout_constraintEnd_toStartOf="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-
-        android:background="@color/black"
-        app:layoutManager="LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="3"
-        tools:listitem="@layout/plant_item" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
+
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <!--<Button
@@ -48,15 +36,29 @@
             tools:layout_editor_absoluteY="631dp" />-->
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcView"
+            layout_constraintEnd_toStartOf="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:background="@color/black"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddImgGallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/plant_item" />
+
         <Button
             android:id="@+id/btnAddImgGallery"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
             android:text="Gallery"
-            app:layout_constraintBottom_toTopOf="@+id/btnUnlockDel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/btnExit"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnAddImgCamera"
@@ -67,25 +69,17 @@
             app:layout_constraintBottom_toTopOf="@+id/btnExit"
             app:layout_constraintEnd_toEndOf="parent"
 
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnUnlockDel"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:text="UnlockDel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            />
 
         <Button
             android:id="@+id/btnExit"
-            android:layout_width="128dp"
+            android:layout_width="300dp"
+
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
             android:text="Exit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/btnAddImgCamera"
+            app:layout_constraintStart_toStartOf="@+id/btnAddImgGallery" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

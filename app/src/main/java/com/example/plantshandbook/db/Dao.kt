@@ -15,9 +15,16 @@ interface Dao {
     @Query("DELETE FROM image_list WHERE id IS :id")
     suspend fun deleteImage(id: Int)
 
+    //@Query("SELECT 'id' FROM image_list")
+    //suspend fun idRead(): Flow<List<ImageItem>>
+
     @Insert
     suspend fun insertImage(note: ImageItem)
 
     @Update
     suspend fun updateImage(note: ImageItem)
+
+
+
+
 }

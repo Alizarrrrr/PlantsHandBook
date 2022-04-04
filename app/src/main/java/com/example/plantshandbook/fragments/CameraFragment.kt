@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_camera.*
 
 
 class CameraFragment : BaseFragment() {
-    lateinit var binding:FragmentCameraBinding
+    lateinit var binding: FragmentCameraBinding
     private val adapter = PlantAdapter()
     private val imageIdList = listOf(
         R.drawable.plant1,
@@ -48,14 +48,17 @@ class CameraFragment : BaseFragment() {
             (activity as MainActivity).startCamera()
         }
         btnSaveImg.setOnClickListener {
-            SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
-                override fun onClick(){
-                    (activity as MainActivity).saveImgControl()
+            SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener {
+                override fun onClick() {
+                    (activity as MainActivity).saveCameraShot()
                 }
             })
         }
         btnEndPick.setOnClickListener {
-            (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
+            (activity as MainActivity).navigate(
+                RedactFragment(),
+                RedactFragment::class.simpleName.toString()
+            )
         }
 
 

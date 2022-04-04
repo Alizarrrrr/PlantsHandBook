@@ -9,8 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 //import com.example.plantshandbook.databinding.PlantItemBinding
 import java.util.ArrayList
-import kotlinx.android.synthetic.main.plant_item.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.plant_item.view.*
 
 class PlantAdapter internal constructor() :

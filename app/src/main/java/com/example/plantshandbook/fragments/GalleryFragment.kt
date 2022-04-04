@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.plantshandbook.activities.MainActivity
+import com.example.plantshandbook.activities.MainActivity.Companion.bitmapCheck
 import com.example.plantshandbook.databinding.FragmentGalleryBinding
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -43,7 +44,7 @@ class GalleryFragment : BaseFragment() {
         btnSaveImgGallery.setOnClickListener{
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
                 override fun onClick(){
-                    (activity as MainActivity).resaveGalleryImg()
+                    (activity as MainActivity).saveGalleryImg()
                 }
             })
 
@@ -52,6 +53,7 @@ class GalleryFragment : BaseFragment() {
 
         btnEndPickGallery.setOnClickListener {
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
+            bitmapCheck = false
         }
     }
 

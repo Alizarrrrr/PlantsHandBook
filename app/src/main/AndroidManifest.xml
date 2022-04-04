@@ -19,14 +19,14 @@
         android:theme="@style/Theme.PlantsHandBook">
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/provider_paths" />
+            android:resource="@xml/provider_paths"
+             />
 
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -8,9 +8,13 @@ class MainViewModel(dataBase: MainDataBase): ViewModel() {
     val dao = dataBase.getDao()
     val allImage: LiveData<List<ImageItem>> = dao.getAllImage().asLiveData()
 
+
     fun insertImage(item: ImageItem) = viewModelScope.launch {
         dao.insertImage(item)
     }
+
+
+
 
     fun updateImage(item: ImageItem) = viewModelScope.launch {
         dao.updateImage(item)
@@ -19,6 +23,11 @@ class MainViewModel(dataBase: MainDataBase): ViewModel() {
     fun deleteImage(id: Int) = viewModelScope.launch {
         dao.deleteImage(id)
     }
+
+
+
+
+
 
     class  MainViewModelFactory(val database: MainDataBase) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -3,12 +3,15 @@ package com.example.plantshandbook
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.plantshandbook.databinding.PlantItemBinding
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.utils.Base64CoderDecoder
 import com.squareup.picasso.Picasso
 
 
@@ -26,9 +29,13 @@ class ListImageAdapter(private val listener: Listener) : ListAdapter<ImageItem, 
 
         fun setData(img: ImageItem, listener: Listener) = with(binding) {
             tvTitle.text = img.title
-            Picasso.get().load(img.path).into(im)
+            im.setImageBitmap(Base64CoderDecoder.decoder(img.img))
+            //Picasso.get().load(img.path).into(im)
             btnDel.setOnClickListener{
-                listener.deleteItem(img.id!!)
+
+                    listener.deleteItem(img.id!!)
+
+
             }
         }
         companion object{

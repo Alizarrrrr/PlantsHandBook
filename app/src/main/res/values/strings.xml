@@ -16,5 +16,14 @@
     <string name="save_img">Save</string>
     <string name="cancel_save_img">Cancel</string>
     <string name="hint_img_name">Image name</string>
+    <string name="permission_delete">Permission Delete</string>
+    <string name="permision_delete_text">Turn on the switch to be able to delete the image</string>
+    <string name="exit">Exit</string>
+    <string name="layout_margin_text_var_game">24dp</string>
+    <string name="layout_margin_start_text_var_game">24dp</string>
+    <string name="close_game_dialog_title">Close game</string>
+    <string name="close_game_dialog_body">Do you want to finish the game?</string>
+    <string name="close_game_dialog_close">Finish</string>
+    <string name="close_game_dialog_cancel">Cancel</string>
 
 </resources>

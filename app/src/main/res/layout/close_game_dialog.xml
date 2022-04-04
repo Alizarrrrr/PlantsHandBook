@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/save_alert"
+        android:text="@string/close_game_dialog_title"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="@string/save_image_name"
+        android:text="@string/close_game_dialog_body"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -33,20 +33,7 @@
 
         app:layout_constraintTop_toBottomOf="@+id/tvCloseDialogTitle" />
 
-    <EditText
-        android:id="@+id/edNameObjectPhoto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
 
-        android:hint="@string/hint_img_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCloseDialogBody" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -56,10 +43,10 @@
         android:layout_marginEnd="2dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/edNameObjectPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/edNameObjectPhoto">
+        app:layout_constraintStart_toStartOf="@+id/tvCloseDialogBody"
+        app:layout_constraintTop_toBottomOf="@+id/tvCloseDialogBody">
         <Button
-            android:id="@+id/bSave"
+            android:id="@+id/btnCloseGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -67,10 +54,10 @@
             android:layout_marginEnd="2dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
-            android:text="@string/save_img" />
+            android:text="@string/close_game_dialog_close" />
 
         <Button
-            android:id="@+id/bCancel"
+            android:id="@+id/btnCloseGameCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -78,7 +65,7 @@
             android:layout_marginEnd="2dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
-            android:text="@string/cancel_save_img" />
+            android:text="@string/close_game_dialog_cancel" />
 
 
 
