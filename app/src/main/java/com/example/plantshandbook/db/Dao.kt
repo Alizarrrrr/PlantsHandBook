@@ -1,5 +1,6 @@
 package com.example.plantshandbook.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface Dao {
     @Query("SELECT * FROM image_list")
-    fun getAllImage(): Flow<List<ImageItem>>
+    fun getAllImage(): LiveData<List<ImageItem>>
+
+    @Query("SELECT * FROM image_list")
+    suspend fun getAllImageList(): List<ImageItem>
 
     @Query("DELETE FROM image_list WHERE id IS :id")
     suspend fun deleteImage(id: Int)

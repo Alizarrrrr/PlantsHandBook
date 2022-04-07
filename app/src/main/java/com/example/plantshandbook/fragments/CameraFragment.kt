@@ -43,6 +43,7 @@ class CameraFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).plotImgCamera()
 
         btnImgCamera.setOnClickListener {
             (activity as MainActivity).startCamera()

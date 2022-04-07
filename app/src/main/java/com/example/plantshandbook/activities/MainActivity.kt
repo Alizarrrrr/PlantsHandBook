@@ -26,6 +26,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
@@ -46,6 +48,8 @@ class MainActivity : BaseActivity() {
    // private val dataModel: DataModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private var imageUri: Uri? = null
+    private var items = emptyList<ImageItem>()
+    var itemSize: Int = 0
 
     //val internalStorageDir = getFilesDir();
     var photoFile: File? = null
@@ -53,6 +57,7 @@ class MainActivity : BaseActivity() {
     val CAMERA_PERMISSION_REQUEST_CODE = 1
     var fileUri: Uri? = null
     private lateinit var bitmap: Bitmap
+    private lateinit var mainViewModel: MainViewModel
 
 
     var currentFragment: Fragment? = null
@@ -65,9 +70,11 @@ class MainActivity : BaseActivity() {
 //        MainViewModel.MainViewModelFactory((context?.Activity as MainApp).database)
 //    }
 
-    private val mainViewModel: MainViewModel by viewModels{
+    /*private val mainViewModel: MainViewModel by viewModels{
         MainViewModel.MainViewModelFactory((applicationContext as MainApp).database)
-    }
+    }*/
+
+
 
 
 
@@ -76,6 +83,8 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(binding.root)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        observer()
 
 
 
@@ -328,6 +337,11 @@ class MainActivity : BaseActivity() {
             }
         }
     }
+    fun plotImgCamera(){
+        if (photoFile != null) {
+            Picasso.get().load(File(photoFile!!.absolutePath)).into(imView)
+        }
+    }
 
     fun saveCameraShot(){
         if (photoFile != null){
@@ -383,8 +397,11 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun switchDelWritedb(){
 
+
+    private fun observer() {
+        mainViewModel.allImage.observe(this, Observer { itemSize = items.size
+        })
     }
 
 
@@ -397,15 +414,10 @@ class MainActivity : BaseActivity() {
 
 
     fun stopApp(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAndRemoveTask();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            finishAffinity();
-        } else {
-            finish();
-        }
-        System.exit(0);
+        finishAndRemoveTask()
+        System.exit(0)
     }
+
     fun imgView(path:String, imgView: ImageView){
         Picasso.get().load(path).into(imgView)
     }
@@ -419,11 +431,11 @@ class MainActivity : BaseActivity() {
 
 
     companion object{
-        var flagStartIn = 0;
-        var enteredName = "";
-        private val IMAGE_CHOOSE = 1000;
-        private val PERMISSION_CODE = 1001;
-        var bitmapCheck = false;
+        var flagStartIn = 0
+        var enteredName = ""
+        private val IMAGE_CHOOSE = 1000
+        private val PERMISSION_CODE = 1001
+        var bitmapCheck = false
 
     }
 

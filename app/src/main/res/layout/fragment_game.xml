@@ -20,6 +20,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
         android:background="@drawable/image_view_style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +85,9 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="@drawable/text_view_style"
+
+                android:background="@drawable/selector_back_text_view"
+
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +100,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text=""
-                android:background="@drawable/text_view_style"
+                android:background="@drawable/selector_back_text_view"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:textColor="@color/white"
@@ -117,7 +121,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text=""
-                android:background="@drawable/text_view_style"
+                android:background="@drawable/selector_back_text_view"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:textColor="@color/white"
@@ -136,7 +141,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text=""
-                android:background="@drawable/text_view_style"
+                android:background="@drawable/selector_back_text_view"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:textColor="@color/white"
@@ -155,11 +161,12 @@
             android:layout_height="100dp"
             android:layout_marginEnd="18dp"
             android:adjustViewBounds="true"
-            android:background="@color/grey1"
+            android:background="@drawable/selector_back_img_button"
+
             android:scaleType="fitCenter"
             android:src="@drawable/ic_check"
-            android:clickable="true"
-            android:focusable="true"
+            android:clickable="false"
+            android:focusable="false"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

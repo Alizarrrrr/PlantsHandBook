@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.plantshandbook.ListImageAdapter
 import com.example.plantshandbook.activities.MainActivity
-import com.example.plantshandbook.activities.MainApp
 
 import com.example.plantshandbook.databinding.FragmentRedactBinding
 import com.example.plantshandbook.db.MainViewModel
@@ -23,9 +23,7 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
     private lateinit var adapter: ListImageAdapter
 
 
-    private val mainViewModel: MainViewModel by activityViewModels {
-        MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
-    }
+    private lateinit var  mainViewModel: MainViewModel
 
     override fun onClickNew() {
 
@@ -44,6 +42,7 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         //Toast.makeText(getActivity(), "Frag_main", Toast.LENGTH_SHORT).show()
         initRcView()
         observer()

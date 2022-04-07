@@ -1,35 +1,42 @@
 package com.example.plantshandbook.db
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.example.plantshandbook.entities.ImageItem
 import kotlinx.coroutines.launch
 
-class MainViewModel(dataBase: MainDataBase): ViewModel() {
-    val dao = dataBase.getDao()
-    val allImage: LiveData<List<ImageItem>> = dao.getAllImage().asLiveData()
 
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun insertImage(item: ImageItem) = viewModelScope.launch {
-        dao.insertImage(item)
+    var roomSingleton: RoomSingleton
+    val allImage: LiveData<List<ImageItem>>
+
+    init {
+        roomSingleton = RoomSingleton.getInstance(application)
+        allImage = roomSingleton.roomDAO().getAllImage()
     }
 
-
-
+    fun insertImage(item: ImageItem) = viewModelScope.launch {
+        roomSingleton.roomDAO().insertImage(item)
+    }
 
     fun updateImage(item: ImageItem) = viewModelScope.launch {
-        dao.updateImage(item)
+        roomSingleton.roomDAO().updateImage(item)
     }
 
     fun deleteImage(id: Int) = viewModelScope.launch {
-        dao.deleteImage(id)
+        roomSingleton.roomDAO().deleteImage(id)
     }
 
+    suspend fun getAllImageList(): List<ImageItem> {
+        return roomSingleton.roomDAO().getAllImageList()
+    }
+
+}
 
 
-
-
-
-    class  MainViewModelFactory(val database: MainDataBase) : ViewModelProvider.Factory{
+/*
+class  MainViewModelFactory(val database: MainDataBase) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(MainViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
@@ -37,19 +44,4 @@ class MainViewModel(dataBase: MainDataBase): ViewModel() {
             }
             throw IllegalAccessException("Unknown ViewModelClass")
         }
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+ */
