@@ -13,6 +13,8 @@ import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.FragmentGameBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.dialogs.CloseGameDialog
+import com.example.plantshandbook.dialogs.GamePassDialog
+import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.utils.Base64CoderDecoder
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -191,9 +193,17 @@ class GameFragment : BaseFragment() {
             sizeIm()
             if (itemSize > 3) {
                 gameAct()
+                setVisibleAll()
                 setContent()
             } else {
-                Toast.makeText(context, "Need more pictures", Toast.LENGTH_SHORT).show()
+                GamePassDialog.showDialog(requireContext(), object : GamePassDialog.Listener{
+                    override fun onClickSwitchRedact() {
+                        (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
+                    }
+                    override fun onClickSwitchMain() {
+                        (activity as MainActivity).navigate(MainFragment(), MainFragment::class.simpleName.toString())
+                    }
+                })
             }
         }
     }
@@ -292,6 +302,17 @@ class GameFragment : BaseFragment() {
         imCheck.isFocusable = false
         imCheck.isClickable = false
         clickTextView = 0
+    }
+
+    private fun setVisibleAll(){
+        imViewGame.visibility = View.VISIBLE
+        btnClose.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
+        tvVar1.visibility = View.VISIBLE
+        tvVar2.visibility = View.VISIBLE
+        tvVar3.visibility = View.VISIBLE
+        tvVar4.visibility = View.VISIBLE
+        imCheck.visibility = View.VISIBLE
     }
 
 

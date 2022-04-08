@@ -21,6 +21,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerCrop"
+        android:visibility="invisible"
         android:background="@drawable/image_view_style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:visibility="invisible"
         android:text="X"
         android:textSize="20sp"
         app:cornerRadius="16sp"
@@ -43,6 +45,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +54,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
+
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +74,7 @@
 
             <TextView
                 android:id="@+id/tvVar1"
+                android:visibility="invisible"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -95,6 +100,7 @@
 
             <TextView
                 android:id="@+id/tvVar2"
+                android:visibility="invisible"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -116,6 +122,7 @@
 
             <TextView
                 android:id="@+id/tvVar3"
+                android:visibility="invisible"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -136,6 +143,7 @@
 
             <TextView
                 android:id="@+id/tvVar4"
+                android:visibility="invisible"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -157,6 +165,7 @@
 
         <ImageButton
             android:id="@+id/imCheck"
+            android:visibility="invisible"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="18dp"

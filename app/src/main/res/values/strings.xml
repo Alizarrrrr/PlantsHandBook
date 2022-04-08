@@ -25,5 +25,9 @@
     <string name="close_game_dialog_body">Do you want to finish the game?</string>
     <string name="close_game_dialog_close">Finish</string>
     <string name="close_game_dialog_cancel">Cancel</string>
+    <string name="game_pass_dialog_body">There are not enough images in the database to start the game. Add images first.</string>
+    <string name="game_pass_dialog_title">Switch to edit mode</string>
+    <string name="game_pass_dialog_conversion">Switch</string>
+    <string name="game_pass_dialog_cancel">Cancel</string>
 
 </resources>
