@@ -40,6 +40,7 @@ class GalleryFragment : BaseFragment() {
 
         btnPickImage.setOnClickListener {
             (activity as MainActivity).imagePicker()
+            (activity as MainActivity).drawingImage()
         }
         btnSaveImgGallery.setOnClickListener{
             SaveImagDialog.showDialog(requireContext(), object : SaveImagDialog.Listener{
@@ -47,13 +48,16 @@ class GalleryFragment : BaseFragment() {
                     (activity as MainActivity).saveGalleryImg()
                 }
             })
+            (activity as MainActivity).drawingImage()
 
         }
+
 
 
         btnEndPickGallery.setOnClickListener {
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
             bitmapCheck = false
+
         }
     }
 
