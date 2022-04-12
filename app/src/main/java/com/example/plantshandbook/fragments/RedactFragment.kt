@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -13,17 +15,20 @@ import com.example.plantshandbook.activities.MainActivity
 
 import com.example.plantshandbook.databinding.FragmentRedactBinding
 import com.example.plantshandbook.db.MainViewModel
+import com.example.plantshandbook.dialogs.DeleteImageDialog
+import com.example.plantshandbook.dialogs.RedactNameDialog
 import com.example.plantshandbook.entities.ImageItem
 import kotlinx.android.synthetic.main.fragment_redact.*
 
 
 class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
     lateinit var binding: FragmentRedactBinding
+
     //private val dataModel: DataModel by activityViewModels()
     private lateinit var adapter: ListImageAdapter
 
 
-    private lateinit var  mainViewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onClickNew() {
 
@@ -86,19 +91,47 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
         }
     }
 
+    private fun delDialog(): Boolean {
+        val a: Boolean = false
+        DeleteImageDialog.showDialog(requireContext(), object : DeleteImageDialog.Listener {
+
+            override fun onClick() {
+                val a = true
+
+            }
+        })
+        return a
+
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = RedactFragment()
     }
 
+    override fun updateImage(item: ImageItem) {
+        RedactNameDialog.showDialog(activity as AppCompatActivity, object : RedactNameDialog.Listener{
+            override fun onClick(name: String) {
+                mainViewModel.updateImage(item.copy(title = name))
+            }
+        }, item.title)
+    }
+
 
     override fun deleteItem(id: Int) {
-        mainViewModel.deleteImage(id)
+        DeleteImageDialog.showDialog(requireContext(), object : DeleteImageDialog.Listener {
+            override fun onClick() {
+                mainViewModel.deleteImage(id)
+
+            }
+        })
+
     }
 
     override fun onClickItem(note: ImageItem) {
 
     }
+
 
 }
 /*private fun setupView() {

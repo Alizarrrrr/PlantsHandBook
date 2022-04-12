@@ -5,12 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.PlantItemBinding
+import com.example.plantshandbook.dialogs.DeleteImageDialog
+import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.fragments.RedactFragment
 import com.example.plantshandbook.utils.Base64CoderDecoder
 import com.squareup.picasso.Picasso
 
@@ -30,12 +35,11 @@ class ListImageAdapter(private val listener: Listener) : ListAdapter<ImageItem, 
         fun setData(img: ImageItem, listener: Listener) = with(binding) {
             tvTitle.text = img.title
             im.setImageBitmap(Base64CoderDecoder.decoder(img.img))
-            //Picasso.get().load(img.path).into(im)
+            btnRedact.setOnClickListener {
+                listener.updateImage(img)
+            }
             btnDel.setOnClickListener{
-
-                    listener.deleteItem(img.id!!)
-
-
+                listener.deleteItem(img.id!!)
             }
         }
         companion object{
@@ -58,6 +62,7 @@ class ListImageAdapter(private val listener: Listener) : ListAdapter<ImageItem, 
     }
 
     interface Listener{
+        fun updateImage(item: ImageItem)
         fun deleteItem(id: Int)
         fun onClickItem(note: ImageItem)
     }

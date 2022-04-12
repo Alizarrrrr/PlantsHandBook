@@ -29,5 +29,13 @@
     <string name="game_pass_dialog_title">Switch to edit mode</string>
     <string name="game_pass_dialog_conversion">Switch</string>
     <string name="game_pass_dialog_cancel">Cancel</string>
+    <string name="delete_image_dialog_body">Confirm your intention to delete the image</string>
+    <string name="delete_image_dialog_title">Deleting an image</string>
+    <string name="delete_image_dialog_conversion">Delete</string>
+    <string name="delete_image_dialog_cancel">Cancel</string>
+    <string name="redact_name_dialog_body">Renaming an image</string>
+    <string name="redact_name_dialog_hint">Enter a new name</string>
+    <string name="redact_name_dialog_rename">Rename</string>
+    <string name="redact_name_dialog_cancel">Cancel</string>
 
 </resources>

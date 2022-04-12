@@ -48,7 +48,7 @@ class GalleryFragment : BaseFragment() {
                     (activity as MainActivity).saveGalleryImg()
                 }
             })
-            (activity as MainActivity).drawingImage()
+            //(activity as MainActivity).drawingImage()
 
         }
 

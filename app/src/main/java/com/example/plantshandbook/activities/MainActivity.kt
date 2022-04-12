@@ -50,7 +50,7 @@ class MainActivity : BaseActivity() {
 
     // private val dataModel: DataModel by viewModels()
     private lateinit var binding: ActivityMainBinding
-    private var imageUri: Uri? = null
+
     private var items = emptyList<ImageItem>()
     var itemSize: Int = 0
     private val maxLengthImage = 1000
@@ -244,9 +244,6 @@ class MainActivity : BaseActivity() {
                 try {
                     bitmap = ImageDecoder.decodeBitmap(source)
                     bitmapCheck = true
-                    val heightSecondary = 1500
-
-
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -263,7 +260,6 @@ class MainActivity : BaseActivity() {
             }
             bitmap = resizeBitmap(bitmap, maxLengthImage)
             drawingImage()
-
 
         }
 
@@ -359,6 +355,7 @@ class MainActivity : BaseActivity() {
             }
             if (imageSave != null) {
                 mainViewModel.insertImage(imageSave)
+                Toast.makeText(this, "Save successfully", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
@@ -377,6 +374,7 @@ class MainActivity : BaseActivity() {
             }
             if (imageSave != null) {
                 mainViewModel.insertImage(imageSave)
+                Toast.makeText(this, "Save successfully", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
@@ -386,9 +384,10 @@ class MainActivity : BaseActivity() {
 
     fun drawingImage() {
         lifecycleScope.launch {
-            delay(300L)
-
+            delay(100L)
+            if (imageUri!=null) {
                 imViewGallery.setImageURI(imageUri)
+            }
 
         }
 
@@ -453,6 +452,8 @@ class MainActivity : BaseActivity() {
         private val IMAGE_CHOOSE = 1000
         private val PERMISSION_CODE = 1001
         var bitmapCheck = false
+        var imageUri: Uri? = null
+
 
     }
 
