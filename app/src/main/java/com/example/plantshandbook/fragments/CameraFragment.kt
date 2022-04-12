@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
@@ -61,6 +62,17 @@ class CameraFragment : BaseFragment() {
                 RedactFragment::class.simpleName.toString()
             )
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as MainActivity).navigate(
+                    RedactFragment(),
+                    RedactFragment::class.simpleName.toString()
+                )
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
 
     }

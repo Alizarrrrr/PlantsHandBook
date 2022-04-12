@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.FragmentMainBinding
+import com.example.plantshandbook.dialogs.CloseAppDialog
+import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment() {
@@ -53,11 +56,29 @@ class MainFragment : BaseFragment() {
 
 
         btnCloseApp.setOnClickListener{
-            (activity as MainActivity).stopApp()
+            CloseAppDialog.showDialog(requireContext(), object : CloseAppDialog.Listener{
+                override fun onClick(){
+                    (activity as MainActivity).stopApp()
+                }
+            })
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                CloseAppDialog.showDialog(requireContext(), object : CloseAppDialog.Listener{
+                    override fun onClick(){
+                        (activity as MainActivity).stopApp()
+                    }
+                })
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
     }
 
     companion object {
 
     }
+
+
 }

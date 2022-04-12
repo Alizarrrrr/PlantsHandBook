@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import com.example.plantshandbook.activities.MainActivity
 
 import com.example.plantshandbook.databinding.FragmentRedactBinding
 import com.example.plantshandbook.db.MainViewModel
+import com.example.plantshandbook.dialogs.CloseAppDialog
 import com.example.plantshandbook.dialogs.DeleteImageDialog
 import com.example.plantshandbook.dialogs.RedactNameDialog
 import com.example.plantshandbook.entities.ImageItem
@@ -57,12 +59,12 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
                 CameraFragment::class.simpleName.toString()
             )
         }
+
         btnAddImgGallery.setOnClickListener {
             (activity as MainActivity).navigate(
                 GalleryFragment(),
                 GalleryFragment::class.simpleName.toString()
             )
-
         }
 
         btnExit.setOnClickListener {
@@ -70,8 +72,18 @@ class RedactFragment : BaseFragment(), ListImageAdapter.Listener {
                 MainFragment(),
                 MainFragment::class.simpleName.toString()
             )
-
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as MainActivity).navigate(
+                    MainFragment(),
+                    MainFragment::class.simpleName.toString()
+                )
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
+
     }
 
     private fun initRcView() = with(binding) {

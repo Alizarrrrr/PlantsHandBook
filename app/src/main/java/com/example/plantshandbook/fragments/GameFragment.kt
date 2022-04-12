@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -117,13 +118,8 @@ class GameFragment : BaseFragment() {
                 setTextViewClickable()
                 gameAct()
                 setContent()
-
             }
         }
-
-
-
-
 
         btnClose.setOnClickListener {
             CloseGameDialog.showDialog(requireContext(), object : CloseGameDialog.Listener {
@@ -135,6 +131,17 @@ class GameFragment : BaseFragment() {
                 }
             })
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as MainActivity).navigate(
+                    MainFragment(),
+                    MainFragment::class.simpleName.toString()
+                )
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
     }
 

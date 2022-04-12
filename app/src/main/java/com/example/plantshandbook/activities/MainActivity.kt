@@ -385,8 +385,9 @@ class MainActivity : BaseActivity() {
     fun drawingImage() {
         lifecycleScope.launch {
             delay(100L)
-            if (imageUri!=null) {
+            if (imageUri != null) {
                 imViewGallery.setImageURI(imageUri)
+//                imageUri = null
             }
 
         }
@@ -399,10 +400,12 @@ class MainActivity : BaseActivity() {
 
         val transaction = supportFragmentManager.beginTransaction()
         if (fragment != null) {
-            currentFragment = fragment
-            transaction.replace(R.id.place_holder_main, fragment, tag)
-            transaction.addToBackStack(null)
-            transaction.commit()
+
+                currentFragment = fragment
+                transaction.replace(R.id.place_holder_main, fragment, tag)
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+
         }
     }
 
@@ -456,9 +459,9 @@ class MainActivity : BaseActivity() {
 
 
     }
-
-
 }
+
+    //override fun onBackPressed() {}
 
 
 /*

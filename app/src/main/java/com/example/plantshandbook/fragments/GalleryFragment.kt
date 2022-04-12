@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.activities.MainActivity.Companion.bitmapCheck
 import com.example.plantshandbook.databinding.FragmentGalleryBinding
@@ -49,16 +50,24 @@ class GalleryFragment : BaseFragment() {
                 }
             })
             //(activity as MainActivity).drawingImage()
-
         }
-
-
 
         btnEndPickGallery.setOnClickListener {
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
             bitmapCheck = false
 
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as MainActivity).navigate(
+                    RedactFragment(),
+                    RedactFragment::class.simpleName.toString()
+                )
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
     }
 
     companion object {

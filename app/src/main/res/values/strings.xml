@@ -37,5 +37,10 @@
     <string name="redact_name_dialog_hint">Enter a new name</string>
     <string name="redact_name_dialog_rename">Rename</string>
     <string name="redact_name_dialog_cancel">Cancel</string>
+    <string name="close_app_dialog_title">Close app</string>
+    <string name="close_app_dialog_body">Do you want to close the application?</string>
+    <string name="close_app_dialog_close">Close</string>
+    <string name="close_app_dialog_cancel">Cancel</string>
+
 
 </resources>
