@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.activities.MainActivity.Companion.bitmapCheck
+import com.example.plantshandbook.activities.MainActivity.Companion.imageUri
 import com.example.plantshandbook.databinding.FragmentGalleryBinding
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_gallery.*
@@ -55,6 +56,7 @@ class GalleryFragment : BaseFragment() {
         btnEndPickGallery.setOnClickListener {
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
             bitmapCheck = false
+            imageUri = null
 
         }
 
@@ -64,6 +66,7 @@ class GalleryFragment : BaseFragment() {
                     RedactFragment(),
                     RedactFragment::class.simpleName.toString()
                 )
+                imageUri = null
             }
         }
 

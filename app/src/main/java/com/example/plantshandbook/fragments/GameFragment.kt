@@ -17,6 +17,7 @@ import com.example.plantshandbook.dialogs.CloseGameDialog
 import com.example.plantshandbook.dialogs.GamePassDialog
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.fragments.MainFragment.Companion.gameMode
 import com.example.plantshandbook.utils.Base64CoderDecoder
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.coroutines.launch
@@ -63,6 +64,7 @@ class GameFragment : BaseFragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         observer()
+        setMarkupGameMode()
 //        gameAct()
 
 
@@ -314,12 +316,23 @@ class GameFragment : BaseFragment() {
     private fun setVisibleAll(){
         imViewGame.visibility = View.VISIBLE
         btnClose.visibility = View.VISIBLE
-        progressBar.visibility = View.VISIBLE
+       // progressBar.visibility = View.VISIBLE
         tvVar1.visibility = View.VISIBLE
         tvVar2.visibility = View.VISIBLE
         tvVar3.visibility = View.VISIBLE
         tvVar4.visibility = View.VISIBLE
         imCheck.visibility = View.VISIBLE
+    }
+
+    private fun setMarkupGameMode(){
+        when(gameMode){
+            0 ->{
+                progressBar.visibility = View.INVISIBLE
+            }
+            1 ->{
+                progressBar.visibility = View.VISIBLE
+            }
+        }
     }
 
 

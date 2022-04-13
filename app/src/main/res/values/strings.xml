@@ -41,6 +41,10 @@
     <string name="close_app_dialog_body">Do you want to close the application?</string>
     <string name="close_app_dialog_close">Close</string>
     <string name="close_app_dialog_cancel">Cancel</string>
+    <string name="game_mode_dialog_title">Game mode selection</string>
+    <string name="game_mode_dialog_body">Select game mode</string>
+    <string name="game_mode_dialog_conversion">Free</string>
+    <string name="game_mode_dialog_cancel">10 pictures</string>
 
 
 </resources>

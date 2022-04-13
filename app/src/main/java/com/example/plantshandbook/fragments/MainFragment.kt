@@ -10,6 +10,7 @@ import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.FragmentMainBinding
 import com.example.plantshandbook.dialogs.CloseAppDialog
+import com.example.plantshandbook.dialogs.GameModeDialog
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -36,17 +37,24 @@ class MainFragment : BaseFragment() {
 
 
 
-        btnList.setOnClickListener{
-
-        }
-
         btnStat.setOnClickListener{
 
         }
 
         */
         btnStartGame.setOnClickListener{
-            (activity as MainActivity).navigate(GameFragment(), GameFragment::class.simpleName.toString())
+            GameModeDialog.showDialog(requireContext(), object : GameModeDialog.Listener{
+                override fun onClickSwitchFree() {
+                    gameMode = 0
+                    (activity as MainActivity).navigate(GameFragment(), GameFragment::class.simpleName.toString())
+                }
+
+                override fun onClickSwitchLimit() {
+                    gameMode = 1
+                    (activity as MainActivity).navigate(GameFragment(), GameFragment::class.simpleName.toString())
+                }
+            })
+
 
         }
 
@@ -77,6 +85,7 @@ class MainFragment : BaseFragment() {
     }
 
     companion object {
+        var gameMode: Int? = null
 
     }
 
