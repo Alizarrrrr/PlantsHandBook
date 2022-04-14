@@ -16,6 +16,7 @@ import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.dialogs.CloseGameDialog
 import com.example.plantshandbook.dialogs.GamePassDialog
 import com.example.plantshandbook.dialogs.SaveImagDialog
+import com.example.plantshandbook.entities.EndGameItem
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.fragments.MainFragment.Companion.gameMode
 import com.example.plantshandbook.utils.Base64CoderDecoder
@@ -29,7 +30,8 @@ class GameFragment : BaseFragment() {
     var listImage: List<ImageItem> = listOf()
     var itemSize: Int = 0
     var randomValues: Int = 9999999
-    var correctAnswerList = IntArray(10)
+    private var correctAnswerList = IntArray(1000)
+    var currentAnswerList = IntArray(1000)
     var gameIteration: Int = 0
     var imageContainer: String = ""
     var imageNameList = Array(4) { "" }
@@ -37,7 +39,8 @@ class GameFragment : BaseFragment() {
     private var clickTextView: Int = 0
     var currentSelection: Int = 9999999
     var currentTextView: Int = 99
-    var gameResult = Array<Boolean>(10) { false }
+    var gameResult = BooleanArray(1000)
+
 
 
     override fun onClickNew() {
@@ -65,6 +68,7 @@ class GameFragment : BaseFragment() {
 
         observer()
         setMarkupGameMode()
+        setProgressBar()
 //        gameAct()
 
 
@@ -110,9 +114,9 @@ class GameFragment : BaseFragment() {
                 imCheck.setImageResource(R.drawable.ic_next)
                 clickTextView = 2
                 setBackTextCheck()
-            }else if (clickTextView == 2){
+            } else if (clickTextView == 2) {
                 gameIteration += 1
-                randomValuesImageList= arrayListOf<Int>()
+                randomValuesImageList = arrayListOf<Int>()
                 imCheck.setImageResource(R.drawable.ic_check)
                 setDefaultTextView()
                 defaultValueVariables()
@@ -120,6 +124,8 @@ class GameFragment : BaseFragment() {
                 setTextViewClickable()
                 gameAct()
                 setContent()
+                setProgressBar()
+                gameEnd()
             }
         }
 
@@ -176,8 +182,11 @@ class GameFragment : BaseFragment() {
             correctAnswerList[gameIteration] = randomValuesImageList[randomValues]
             //copy image
             imageContainer = listImage[correctAnswerList[gameIteration]].img
+
+
             //copy title
             for (i in 0..3) {
+
                 imageNameList[i] = listImage[randomValuesImageList[i]].title
             }
 
@@ -205,12 +214,19 @@ class GameFragment : BaseFragment() {
                 setVisibleAll()
                 setContent()
             } else {
-                GamePassDialog.showDialog(requireContext(), object : GamePassDialog.Listener{
+                GamePassDialog.showDialog(requireContext(), object : GamePassDialog.Listener {
                     override fun onClickSwitchRedact() {
-                        (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
+                        (activity as MainActivity).navigate(
+                            RedactFragment(),
+                            RedactFragment::class.simpleName.toString()
+                        )
                     }
+
                     override fun onClickSwitchMain() {
-                        (activity as MainActivity).navigate(MainFragment(), MainFragment::class.simpleName.toString())
+                        (activity as MainActivity).navigate(
+                            MainFragment(),
+                            MainFragment::class.simpleName.toString()
+                        )
                     }
                 })
             }
@@ -267,7 +283,6 @@ class GameFragment : BaseFragment() {
                 3 -> {
                     tvVar4.setBackgroundResource(R.drawable.text_view_style_check_answer)
                 }
-
             }
         }
         tvVar1.isFocusable = false
@@ -278,6 +293,20 @@ class GameFragment : BaseFragment() {
         tvVar2.isClickable = false
         tvVar3.isClickable = false
         tvVar4.isClickable = false
+
+        if (gameMode == 1) {
+            endGameList.add(
+                EndGameItem(
+                    gameIteration,
+                    gameResult[gameIteration],
+                    listImage[currentSelection].title,
+                    listImage[correctAnswerList[gameIteration]].title,
+                    imageContainer
+                )
+            )
+        }
+
+        currentAnswerList[gameIteration] = currentSelection
     }
 
     private fun setDefaultTextView() {
@@ -287,7 +316,7 @@ class GameFragment : BaseFragment() {
         tvVar4.setBackgroundResource(R.drawable.selector_back_text_view)
     }
 
-    private fun setTextViewClickable(){
+    private fun setTextViewClickable() {
         tvVar1.isFocusable = true
         tvVar2.isFocusable = true
         tvVar3.isFocusable = true
@@ -298,7 +327,7 @@ class GameFragment : BaseFragment() {
         tvVar4.isClickable = true
     }
 
-    private fun defaultValueVariables(){
+    private fun defaultValueVariables() {
         currentTextView = 99
     }
 
@@ -307,16 +336,17 @@ class GameFragment : BaseFragment() {
         imCheck.isClickable = true
         clickTextView = 1
     }
+
     private fun setImButtonNoClickable() {
         imCheck.isFocusable = false
         imCheck.isClickable = false
         clickTextView = 0
     }
 
-    private fun setVisibleAll(){
+    private fun setVisibleAll() {
         imViewGame.visibility = View.VISIBLE
         btnClose.visibility = View.VISIBLE
-       // progressBar.visibility = View.VISIBLE
+        // progressBar.visibility = View.VISIBLE
         tvVar1.visibility = View.VISIBLE
         tvVar2.visibility = View.VISIBLE
         tvVar3.visibility = View.VISIBLE
@@ -324,15 +354,42 @@ class GameFragment : BaseFragment() {
         imCheck.visibility = View.VISIBLE
     }
 
-    private fun setMarkupGameMode(){
-        when(gameMode){
-            0 ->{
+    private fun setMarkupGameMode() {
+        when (gameMode) {
+            0 -> {
                 progressBar.visibility = View.INVISIBLE
+                tvProgressBar.visibility = View.INVISIBLE
             }
-            1 ->{
+            1 -> {
                 progressBar.visibility = View.VISIBLE
+                tvProgressBar.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun setProgressBar() {
+        if (gameMode == 1) {
+            progressBar.max = 10
+            progressBar.progress = gameIteration
+            tvProgressBar.text = getString(R.string.progress_bar_text, gameIteration)
+        }
+    }
+
+    private fun gameEnd() {
+        if (gameMode == 1 && gameIteration == 10) {
+
+            (activity as MainActivity).navigate(
+                EndGameFragment(),
+                EndGameFragment::class.simpleName.toString()
+            )
+        }
+    }
+
+    companion object {
+        //var endGameList: List<EndGameItem> = listOf()
+        //var endGameList: MutableList<EndGameItem> = mutableListOf()
+        var endGameList = emptyList<EndGameItem>().toMutableList()
+
     }
 
 

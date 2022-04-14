@@ -45,6 +45,9 @@
     <string name="game_mode_dialog_body">Select game mode</string>
     <string name="game_mode_dialog_conversion">Free</string>
     <string name="game_mode_dialog_cancel">10 pictures</string>
+    <string name="progress_bar_text">%1$d/10</string>
+    <string name="end_game_header_text_select">Selected name</string>
+    <string name="end_game_header_text_right">Correct name</string>
 
 
 </resources>

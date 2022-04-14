@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import com.example.plantshandbook.PlantAdapter
 import com.example.plantshandbook.R
 import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.FragmentCameraBinding
@@ -16,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_camera.*
 
 class CameraFragment : BaseFragment() {
     lateinit var binding: FragmentCameraBinding
-    private val adapter = PlantAdapter()
+
     private val imageIdList = listOf(
         R.drawable.plant1,
         R.drawable.plant2,
