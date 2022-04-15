@@ -3,8 +3,6 @@ package com.example.plantshandbook.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.widget.Toast
-import com.example.plantshandbook.activities.MainActivity
 import com.example.plantshandbook.databinding.GameModeDialogBinding
 
 

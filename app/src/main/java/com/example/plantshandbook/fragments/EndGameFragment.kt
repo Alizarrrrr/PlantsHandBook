@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +54,17 @@ class EndGameFragment : BaseFragment() {
                 MainFragment::class.simpleName.toString()
             )
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (activity as MainActivity).navigate(
+                    MainFragment(),
+                    MainFragment::class.simpleName.toString()
+                )
+            }
+        }
+
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, callback)
 
     }
     private fun initRcView() = with(binding) {

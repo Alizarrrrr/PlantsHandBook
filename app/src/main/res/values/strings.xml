@@ -48,6 +48,9 @@
     <string name="progress_bar_text">%1$d/10</string>
     <string name="end_game_header_text_select">Selected name</string>
     <string name="end_game_header_text_right">Correct name</string>
+    <string name="stat_header_text">Select the type of statistics</string>
+    <string name="stat_header_text_name">Name image</string>
+    <string name="stat_header_text_progress">Proportion of correct</string>
 
 
 </resources>
