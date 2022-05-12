@@ -12,9 +12,15 @@ data class ImageItem(
     val id: Int?,
     @ColumnInfo (name = "title")
     val title: String,
-    //@ColumnInfo (name = "path")
-    //val  path: String,
     @ColumnInfo (name = "img")
-    val img: String
+    val img: String,
+    @ColumnInfo (name = "all_count_free")
+    val all_count_free: Int,
+    @ColumnInfo (name = "true_count_free")
+    val true_count_free: Int,
+    @ColumnInfo (name = "all_count_10g")
+    val all_count_10g: Int,
+    @ColumnInfo (name = "true_count_10g")
+    val true_count_10g: Int
 
 ): Serializable

@@ -11,7 +11,7 @@ data class StatItem(
     @PrimaryKey (autoGenerate = true)
     val id: Int?,
     @ColumnInfo (name = "game_iteration_free")
-    val game_iteration_free: Int,
+    var game_iteration_free: Int,
     @ColumnInfo (name = "game_iteration_10g")
     val game_iteration_10g: Int
 

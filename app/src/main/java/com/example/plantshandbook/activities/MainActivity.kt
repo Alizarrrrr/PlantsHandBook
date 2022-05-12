@@ -33,6 +33,7 @@ import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.entities.StatItem
 import com.example.plantshandbook.fragments.MainFragment
 import com.example.plantshandbook.utils.Base64CoderDecoder
 import com.squareup.picasso.Picasso
@@ -45,6 +46,7 @@ import java.io.*
 private const val FILE_NAME = "photo.jpg"
 private const val REQUEST_CODE = 42
 private lateinit var photoFile: File
+
 
 class MainActivity : BaseActivity() {
 
@@ -62,9 +64,11 @@ class MainActivity : BaseActivity() {
     var fileUri: Uri? = null
     private lateinit var bitmap: Bitmap
     private lateinit var mainViewModel: MainViewModel
+    var statList: List<StatItem> = listOf()
 
 
     var currentFragment: Fragment? = null
+    private var statListSize: Int? = null
 
     var photoStorageDirPathName: String? = null
 
@@ -85,6 +89,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         observer()
+        startStatItem()
 
 
         // startProgress()
@@ -350,7 +355,11 @@ class MainActivity : BaseActivity() {
                 ImageItem(
                     null,
                     enteredName,
-                    it
+                    it,
+                    0,
+                    0,
+                    0,
+                    0
                 )
             }
             if (imageSave != null) {
@@ -363,13 +372,18 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
     fun saveGalleryImg() {
         if (bitmapCheck) {
             val imageSave = Base64CoderDecoder.encoder(bitmap)?.let {
                 ImageItem(
                     null,
                     enteredName,
-                    it
+                    it,
+                    0,
+                    0,
+                    0,
+                    0
                 )
             }
             if (imageSave != null) {
@@ -379,6 +393,22 @@ class MainActivity : BaseActivity() {
         } else {
             Toast.makeText(this, "Photos missing", Toast.LENGTH_SHORT).show()
 
+        }
+    }
+
+    private fun startStatItem() {
+        lifecycleScope.launch {
+            statList = mainViewModel.getAllStatList()
+            statListSize = statList.size
+            if (statListSize == 0) {
+                mainViewModel.insertStat(
+                    StatItem(
+                        null,
+                        0,
+                        0
+                    )
+                )
+            }
         }
     }
 
@@ -401,10 +431,10 @@ class MainActivity : BaseActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         if (fragment != null) {
 
-                currentFragment = fragment
-                transaction.replace(R.id.place_holder_main, fragment, tag)
-                transaction.disallowAddToBackStack()
-                transaction.commit()
+            currentFragment = fragment
+            transaction.replace(R.id.place_holder_main, fragment, tag)
+            transaction.disallowAddToBackStack()
+            transaction.commit()
 
         }
     }
@@ -461,7 +491,7 @@ class MainActivity : BaseActivity() {
     }
 }
 
-    //override fun onBackPressed() {}
+//override fun onBackPressed() {}
 
 
 /*

@@ -18,6 +18,7 @@ import com.example.plantshandbook.dialogs.GamePassDialog
 import com.example.plantshandbook.dialogs.SaveImagDialog
 import com.example.plantshandbook.entities.EndGameItem
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.entities.StatItem
 import com.example.plantshandbook.fragments.MainFragment.Companion.gameMode
 import com.example.plantshandbook.utils.Base64CoderDecoder
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -28,6 +29,7 @@ class GameFragment : BaseFragment() {
     lateinit var binding: FragmentGameBinding
     private lateinit var mainViewModel: MainViewModel
     var listImage: List<ImageItem> = listOf()
+    var statIt: List<StatItem> = listOf()
     var itemSize: Int = 0
     var randomValues: Int = 9999999
     private var correctAnswerList = IntArray(1000)
@@ -67,6 +69,7 @@ class GameFragment : BaseFragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         observer()
+
         setMarkupGameMode()
         setProgressBar()
 //        gameAct()
@@ -125,6 +128,7 @@ class GameFragment : BaseFragment() {
                 gameAct()
                 setContent()
                 setProgressBar()
+                gameStatSave(statIt[0])
                 gameEnd()
             }
         }
@@ -186,7 +190,6 @@ class GameFragment : BaseFragment() {
 
             //copy title
             for (i in 0..3) {
-
                 imageNameList[i] = listImage[randomValuesImageList[i]].title
             }
 
@@ -208,6 +211,8 @@ class GameFragment : BaseFragment() {
     private fun observer() {
         lifecycleScope.launch {
             listImage = mainViewModel.getAllImageList()
+            statIt = mainViewModel.getAllStatList()
+
             sizeIm()
             if (itemSize > 3) {
                 gameAct()
@@ -378,10 +383,29 @@ class GameFragment : BaseFragment() {
     private fun gameEnd() {
         if (gameMode == 1 && gameIteration == 10) {
 
+
             (activity as MainActivity).navigate(
                 EndGameFragment(),
                 EndGameFragment::class.simpleName.toString()
             )
+        }
+    }
+
+    private fun gameStatSave(item: StatItem){
+        when (gameMode) {
+            0 -> {
+                if (gameIteration ==1){
+                    var statIteration = statIt[0].game_iteration_free + 1
+                    mainViewModel.updateStat(item.copy(game_iteration_free = statIteration))
+                }
+            }
+            1 -> {
+                if (gameIteration ==10){
+                    var statIteration = statIt[0].game_iteration_10g + 1
+                    mainViewModel.updateStat(item.copy(game_iteration_10g = statIteration))
+                }
+
+            }
         }
     }
 

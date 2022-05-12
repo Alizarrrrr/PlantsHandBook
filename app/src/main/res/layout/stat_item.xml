@@ -93,13 +93,37 @@
                     android:layout_marginTop="10dp"
 
                     />
+                <RelativeLayout
+                    android:id="@+id/rl_progress_bar_set"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="visible" >
 
                 <ProgressBar
-                    android:id="@+id/progressBar2"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
+                    android:id="@+id/pb_horizontal"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/custom_progressbar"
+
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0" />
+                    android:layout_alignParentTop="true"
+
+                    android:max="100" />
+
+                    <TextView
+                        android:id="@+id/tv_progress_bar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/pb_horizontal"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="11111"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+
 
 
             </LinearLayout>

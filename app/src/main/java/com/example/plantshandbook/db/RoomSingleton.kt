@@ -5,9 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.entities.StatItem
 
 
-@Database(entities = arrayOf(ImageItem::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(ImageItem::class, StatItem::class), version = 1, exportSchema = false)
+
 
 abstract class RoomSingleton : RoomDatabase() {
     abstract fun roomDAO(): Dao

@@ -3,6 +3,7 @@ package com.example.plantshandbook.db
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.plantshandbook.entities.ImageItem
+import com.example.plantshandbook.entities.StatItem
 import kotlinx.coroutines.launch
 
 
@@ -10,10 +11,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     var roomSingleton: RoomSingleton
     val allImage: LiveData<List<ImageItem>>
+    val allStat: LiveData<List<StatItem>>
 
     init {
         roomSingleton = RoomSingleton.getInstance(application)
         allImage = roomSingleton.roomDAO().getAllImage()
+        allStat = roomSingleton.roomDAO().getAllStat()
     }
 
     fun insertImage(item: ImageItem) = viewModelScope.launch {
@@ -30,6 +33,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun getAllImageList(): List<ImageItem> {
         return roomSingleton.roomDAO().getAllImageList()
+    }
+
+    suspend fun getAllStatList(): List<StatItem> {
+        return roomSingleton.roomDAO().getAllStatList()
+    }
+
+    fun insertStat(item: StatItem) = viewModelScope.launch {
+        roomSingleton.roomDAO().insertStat(item)
+    }
+
+    fun updateStat(item: StatItem) = viewModelScope.launch {
+        roomSingleton.roomDAO().updateStat(item)
     }
 
 }

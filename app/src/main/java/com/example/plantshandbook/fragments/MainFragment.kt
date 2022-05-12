@@ -33,15 +33,15 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       /*
+
 
 
 
         btnStat.setOnClickListener{
-
+            (activity as MainActivity).navigate(StatFragment(), StatFragment::class.simpleName.toString())
         }
 
-        */
+
         btnStartGame.setOnClickListener{
             GameModeDialog.showDialog(requireContext(), object : GameModeDialog.Listener{
                 override fun onClickSwitchFree() {
