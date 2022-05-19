@@ -50,17 +50,18 @@
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_game.xml" value="0.33" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_input.xml" value="0.25" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_main.xml" value="0.33" />
-        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_redact.xml" value="0.5" />
-        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_stat.xml" value="0.3330058939096267" />
+        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_redact.xml" value="0.2" />
+        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/fragment_stat.xml" value="0.18" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/game_mode_dialog.xml" value="0.22" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/game_pass_dialog.xml" value="0.45" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/image_item.xml" value="0.3277777777777778" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/plant_item.xml" value="0.67" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/redact_name_dialog.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/save_image_dialog.xml" value="0.5" />
+        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/spinner.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/spinner_dropdown_item.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/spinner_list.xml" value="0.10925925925925926" />
-        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/stat_item.xml" value="0.67" />
+        <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/stat_item.xml" value="0.25" />
         <entry key="..\:/Users/Vladimir/StudioProjects/PlantsHandBook/app/src/main/res/layout/test.xml" value="0.27447916666666666" />
       </map>
     </option>

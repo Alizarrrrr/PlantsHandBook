@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.plantshandbook.R
@@ -15,7 +15,7 @@ import com.example.plantshandbook.databinding.FragmentGameBinding
 import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.dialogs.CloseGameDialog
 import com.example.plantshandbook.dialogs.GamePassDialog
-import com.example.plantshandbook.dialogs.SaveImagDialog
+
 import com.example.plantshandbook.entities.EndGameItem
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.entities.StatItem
@@ -117,7 +117,10 @@ class GameFragment : BaseFragment() {
                 imCheck.setImageResource(R.drawable.ic_next)
                 clickTextView = 2
                 setBackTextCheck()
+                gameStatPictureSave()
+
             } else if (clickTextView == 2) {
+
                 gameIteration += 1
                 randomValuesImageList = arrayListOf<Int>()
                 imCheck.setImageResource(R.drawable.ic_check)
@@ -395,16 +398,42 @@ class GameFragment : BaseFragment() {
         when (gameMode) {
             0 -> {
                 if (gameIteration ==1){
-                    var statIteration = statIt[0].game_iteration_free + 1
+                    val statIteration = statIt[0].game_iteration_free + 1
                     mainViewModel.updateStat(item.copy(game_iteration_free = statIteration))
                 }
             }
             1 -> {
                 if (gameIteration ==10){
-                    var statIteration = statIt[0].game_iteration_10g + 1
+                    val statIteration = statIt[0].game_iteration_10g + 1
                     mainViewModel.updateStat(item.copy(game_iteration_10g = statIteration))
                 }
+            }
+        }
+    }
 
+    private fun gameStatPictureSave(){
+        when (gameMode) {
+            0 -> {
+                val statIterationAll = listImage[correctAnswerList[gameIteration]].all_count_free + 1
+
+                if (currentSelection == correctAnswerList[gameIteration]){
+                    val statIterationTrue = listImage[correctAnswerList[gameIteration]].true_count_free + 1
+                    mainViewModel.updateImage(listImage[correctAnswerList[gameIteration]].copy(true_count_free= statIterationTrue, all_count_free= statIterationAll))
+                }
+                else{
+                    mainViewModel.updateImage(listImage[correctAnswerList[gameIteration]].copy(all_count_free= statIterationAll))
+                }
+            }
+            1 -> {
+                val statIterationAll = listImage[correctAnswerList[gameIteration]].all_count_10g + 1
+
+                if (currentSelection == correctAnswerList[gameIteration]){
+                    val statIterationTrue = listImage[correctAnswerList[gameIteration]].true_count_10g + 1
+                    mainViewModel.updateImage(listImage[correctAnswerList[gameIteration]].copy(true_count_10g= statIterationTrue, all_count_10g= statIterationAll))
+                }
+                else{
+                    mainViewModel.updateImage(listImage[correctAnswerList[gameIteration]].copy(all_count_10g= statIterationAll))
+                }
             }
         }
     }

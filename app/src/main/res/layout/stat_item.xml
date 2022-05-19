@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="210dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -50,7 +50,7 @@
                     android:gravity=""
                     android:text="@string/stat_header_text_name"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="22sp"
                     android:textStyle="italic"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -70,31 +70,35 @@
                     android:gravity=""
                     android:text="@string/end_game_header_text_select"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     />
+
                 <TextView
-                    android:id="@+id/tvRightHeader"
+                    android:id="@+id/tvRightAllHeader"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="0"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity=""
-                    android:text="@string/stat_header_text_progress"
+                    android:text="@string/stat_header_text_progress_free"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="italic"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
 
                     />
+
+
+
                 <RelativeLayout
-                    android:id="@+id/rl_progress_bar_set"
+                    android:id="@+id/rlProgressBarSetAll"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
@@ -102,7 +106,7 @@
                     android:visibility="visible" >
 
                 <ProgressBar
-                    android:id="@+id/pb_horizontal"
+                    android:id="@+id/pbHorizontalAll"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/custom_progressbar"
 
@@ -113,13 +117,61 @@
                     android:max="100" />
 
                     <TextView
-                        android:id="@+id/tv_progress_bar"
+                        android:id="@+id/tvProgressbarAll"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/pb_horizontal"
+                        android:layout_alignBottom="@id/pbHorizontalAll"
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:text="11111"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvRight10GHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity=""
+                    android:text="@string/stat_header_text_progress_10g"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+
+                    />
+                <RelativeLayout
+                    android:id="@+id/rlProgressBarSet10G"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="visible" >
+
+                    <ProgressBar
+                        android:id="@+id/pbHorizontal10G"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:progressDrawable="@drawable/custom_progressbar"
+
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+
+                        android:max="100" />
+
+                    <TextView
+                        android:id="@+id/tvProgressBar10G"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/pbHorizontal10G"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="01111"
                         android:textSize="16dp" />
                 </RelativeLayout>
 
