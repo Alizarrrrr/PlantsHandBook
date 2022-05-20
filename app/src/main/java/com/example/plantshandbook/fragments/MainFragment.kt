@@ -62,6 +62,10 @@ class MainFragment : BaseFragment() {
             (activity as MainActivity).navigate(RedactFragment(), RedactFragment::class.simpleName.toString())
         }
 
+        btnStat.setOnClickListener {
+            (activity as MainActivity).navigate(StatFragment(), StatFragment::class.simpleName.toString())
+        }
+
 
         btnCloseApp.setOnClickListener{
             CloseAppDialog.showDialog(requireContext(), object : CloseAppDialog.Listener{

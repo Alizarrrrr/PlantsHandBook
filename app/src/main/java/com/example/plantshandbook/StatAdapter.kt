@@ -12,19 +12,19 @@ import androidx.recyclerview.widget.DiffUtil
 import kotlin.math.floor
 
 
-class ListStatAdapter(private val listener: Listener) : ListAdapter<ImageItem, ListStatAdapter.ItemHolder>(ItemComparator()) {
+class StatAdapter() : ListAdapter<ImageItem, StatAdapter.ItemHolder>(ItemComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position), listener)
+        holder.setData(getItem(position))
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = StatItemBinding.bind(view)
 
-        fun setData(img: ImageItem, listener: Listener) = with(binding) {
+        fun setData(img: ImageItem) = with(binding) {
             tvSelect.text = img.title
             imItem.setImageBitmap(Base64CoderDecoder.decoder(img.img))
             val progressBarValAll = img.true_count_free.toString()+"/"+img.all_count_free.toString()
@@ -34,7 +34,9 @@ class ListStatAdapter(private val listener: Listener) : ListAdapter<ImageItem, L
             tvRightAllHeader.text = progressBarValAll
             tvRight10GHeader.text = progressBarVal10g
             pbHorizontalAll.progress = progressBarSetAll
+            tvProgressbarAll.text = progressBarSetAll.toString()+"%"
             pbHorizontal10G.progress = progressBarSet10g
+            tvProgressBar10G.text = progressBarSet10g.toString()+"%"
 
         }
         companion object{
@@ -56,9 +58,7 @@ class ListStatAdapter(private val listener: Listener) : ListAdapter<ImageItem, L
 
     }
 
-    interface Listener{
 
-    }
 
 
 }

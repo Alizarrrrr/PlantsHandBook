@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     android:textSize="20sp"
-    android:textStyle="normal"
+    android:textStyle="italic"
     android:background="#353535"
     />
