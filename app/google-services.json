@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "99701242148",
+    "project_id": "plantshandbook",
+    "storage_bucket": "plantshandbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99701242148:android:0f0a4a02a5df163f17dbb1",
+        "android_client_info": {
+          "package_name": "com.example.plantshandbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99701242148-3vb77omfpr2au34n4em6v5725plj95nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfiiFrxOP8BUBrODUkHVvydiJt0GQl-sE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99701242148-3vb77omfpr2au34n4em6v5725plj95nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

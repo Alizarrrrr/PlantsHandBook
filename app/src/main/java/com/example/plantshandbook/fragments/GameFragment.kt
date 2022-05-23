@@ -124,6 +124,7 @@ class GameFragment : BaseFragment() {
                 gameIteration += 1
                 randomValuesImageList = arrayListOf<Int>()
                 imCheck.setImageResource(R.drawable.ic_check)
+                observer()
                 setDefaultTextView()
                 defaultValueVariables()
                 setImButtonNoClickable()
@@ -436,6 +437,7 @@ class GameFragment : BaseFragment() {
                 }
             }
         }
+
     }
 
     companion object {
