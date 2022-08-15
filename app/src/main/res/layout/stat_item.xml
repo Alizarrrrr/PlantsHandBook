@@ -78,7 +78,7 @@
 
                 <TextView
                     android:id="@+id/tvRightAllHeader"
-                    android:layout_width="match_parent"
+                    android:layout_width="169dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"

@@ -12,6 +12,8 @@ import com.example.plantshandbook.databinding.FragmentMainBinding
 import com.example.plantshandbook.dialogs.CloseAppDialog
 import com.example.plantshandbook.dialogs.GameModeDialog
 import com.example.plantshandbook.dialogs.SaveImagDialog
+import com.example.plantshandbook.entities.FirebaseItem
+import com.example.plantshandbook.utils.FirebaseUtil
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment() {
@@ -33,6 +35,9 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        FirebaseUtil().readDb()
+
 
 
 
@@ -92,6 +97,8 @@ class MainFragment : BaseFragment() {
         var gameMode: Int? = null
 
     }
+
+
 
 
 }

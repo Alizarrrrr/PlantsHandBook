@@ -55,8 +55,8 @@
     <string name="end_game_header_text_right">Correct name</string>
     <string name="stat_header_text">Select the type of statistics</string>
     <string name="stat_header_text_name">Name image</string>
-    <string name="stat_header_text_progress_free">Proportion of correct Game mode Free</string>
-    <string name="stat_header_text_progress_10g">Proportion of correct Game mode 10G</string>
+    <string name="stat_header_text_progress_free">Correct free mode</string>
+    <string name="stat_header_text_progress_10g">Correct 10G mode</string>
     <string name="stat_progress_bar_text">%1$d %</string>
     <string name="stat_game_count_header">Number of games:</string>
 

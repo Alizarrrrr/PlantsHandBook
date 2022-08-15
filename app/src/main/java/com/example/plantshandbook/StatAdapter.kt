@@ -31,12 +31,12 @@ class StatAdapter() : ListAdapter<ImageItem, StatAdapter.ItemHolder>(ItemCompara
             val progressBarSetAll = floor(img.true_count_free.toFloat()/img.all_count_free.toFloat()*100).toInt()
             val progressBarVal10g = img.true_count_10g.toString()+"/"+img.all_count_10g.toString()
             val progressBarSet10g = floor(img.true_count_10g.toFloat()/img.all_count_10g.toFloat()*100).toInt()
-            tvRightAllHeader.text = progressBarValAll
-            tvRight10GHeader.text = progressBarVal10g
+            //tvRightAllHeader.text = progressBarValAll
+            //tvRight10GHeader.text = progressBarVal10g
             pbHorizontalAll.progress = progressBarSetAll
-            tvProgressbarAll.text = progressBarSetAll.toString()+"%"
+            tvProgressbarAll.text = progressBarSetAll.toString()+"% "+progressBarValAll
             pbHorizontal10G.progress = progressBarSet10g
-            tvProgressBar10G.text = progressBarSet10g.toString()+"%"
+            tvProgressBar10G.text = progressBarSet10g.toString()+"% "+progressBarVal10g
 
         }
         companion object{
