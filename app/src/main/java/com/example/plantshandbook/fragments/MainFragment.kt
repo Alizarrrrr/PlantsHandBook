@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment() {
     lateinit var binding: FragmentMainBinding
+    var plants = ArrayList<FirebaseItem>()
     override fun onClickNew() {
 
     }

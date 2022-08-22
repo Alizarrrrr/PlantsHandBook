@@ -2,8 +2,10 @@ package com.example.plantshandbook.db
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.plantshandbook.entities.FirebaseListItem
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.entities.StatItem
+
 import kotlinx.coroutines.launch
 
 
@@ -12,11 +14,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var roomSingleton: RoomSingleton
     val allImage: LiveData<List<ImageItem>>
     val allStat: LiveData<List<StatItem>>
+    val allFbSave: LiveData<List<FirebaseListItem>>
+
 
     init {
         roomSingleton = RoomSingleton.getInstance(application)
         allImage = roomSingleton.roomDAO().getAllImage()
         allStat = roomSingleton.roomDAO().getAllStat()
+        allFbSave = roomSingleton.roomDAO().getAllFb()
     }
 
     fun insertImage(item: ImageItem) = viewModelScope.launch {
@@ -45,6 +50,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateStat(item: StatItem) = viewModelScope.launch {
         roomSingleton.roomDAO().updateStat(item)
+    }
+
+    fun insertFb(item: FirebaseListItem) = viewModelScope.launch {
+        roomSingleton.roomDAO().insertFb(item)
+    }
+
+    fun updateFb(item: FirebaseListItem) = viewModelScope.launch {
+        roomSingleton.roomDAO().updateFb(item)
+    }
+
+    fun deleteFb(id: Int) = viewModelScope.launch {
+        roomSingleton.roomDAO().deleteFb(id)
     }
 
 }
