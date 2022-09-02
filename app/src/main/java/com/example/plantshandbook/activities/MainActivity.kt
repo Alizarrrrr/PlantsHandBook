@@ -32,16 +32,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.plantshandbook.R
 import com.example.plantshandbook.databinding.ActivityMainBinding
 import com.example.plantshandbook.db.MainViewModel
+import com.example.plantshandbook.entities.FirebaseItem
+import com.example.plantshandbook.entities.FirebaseListItem
 import com.example.plantshandbook.entities.ImageItem
 import com.example.plantshandbook.entities.StatItem
 import com.example.plantshandbook.fragments.MainFragment
 import com.example.plantshandbook.utils.Base64CoderDecoder
+import com.example.plantshandbook.utils.FirebaseUtil
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.*
+import java.net.URL
 
 private const val FILE_NAME = "photo.jpg"
 private const val REQUEST_CODE = 42
@@ -65,10 +69,16 @@ class MainActivity : BaseActivity() {
     private lateinit var bitmap: Bitmap
     private lateinit var mainViewModel: MainViewModel
     var statList: List<StatItem> = listOf()
+    var fbList: List<FirebaseListItem> = listOf()
+    var listFbSave: List<FirebaseListItem> = listOf()
+    private var itemSizeSave: Int = 0
+    private var itemSizeFb: Int = 0
+    private var idImageСurrent: Int = 0
 
 
     var currentFragment: Fragment? = null
     private var statListSize: Int? = null
+    private var fbListSize: Int? = null
 
     var photoStorageDirPathName: String? = null
 
@@ -88,8 +98,10 @@ class MainActivity : BaseActivity() {
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(binding.root)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        FirebaseUtil().readDb()
         observer()
         startStatItem()
+        startFbListItem()
 
 
         // startProgress()
@@ -396,6 +408,26 @@ class MainActivity : BaseActivity() {
         }
     }
 
+   private fun saveFbImg(name: String, id: Int) {
+            val imageSave = Base64CoderDecoder.encoder(bitmap)?.let {
+                ImageItem(
+                    id,
+                    name,
+                    it,
+                    0,
+                    0,
+                    0,
+                    0
+                )
+            }
+            if (imageSave != null) {
+                mainViewModel.insertImage(imageSave)
+                Toast.makeText(this, "Save successfully", Toast.LENGTH_SHORT).show()
+              //  idImageСurrent = mainViewModel.               как получить id после автогенерации
+            }
+
+    }
+
     private fun startStatItem() {
         lifecycleScope.launch {
             statList = mainViewModel.getAllStatList()
@@ -405,6 +437,23 @@ class MainActivity : BaseActivity() {
                     StatItem(
                         null,
                         0,
+                        0
+                    )
+                )
+            }
+        }
+    }
+
+    private fun startFbListItem(){
+        lifecycleScope.launch{
+            fbList = mainViewModel.getAllFbList()
+            fbListSize = fbList.size
+            if (fbListSize == 0){
+                mainViewModel.insertFb(
+                    FirebaseListItem(
+                        0,
+                        "",
+                        "",
                         0
                     )
                 )
@@ -444,6 +493,124 @@ class MainActivity : BaseActivity() {
         mainViewModel.allImage.observe(this, Observer {
             itemSize = items.size
         })
+    }
+    private fun sizeIm() {
+        itemSizeSave = listFbSave.size
+        itemSizeFb = plants.size
+    }
+
+    private fun URL.toBitmap(): Bitmap?{
+        return try {
+            BitmapFactory.decodeStream(openStream())
+        }catch (e: IOException){
+            null
+        }
+    }
+
+    private fun observerFb() {
+        lifecycleScope.launch{
+            listFbSave = mainViewModel.getAllFbList()
+            sizeIm()
+            //в бд предполагается сохранение порядка следования, иначе будет перезапись
+            if (itemSizeSave==itemSizeFb){
+                //сравниваем имена, пишем в бд имена и скачиваем и пишем в соответсвующую бд
+                for(i in 1 ..itemSizeSave) {
+                    if (listFbSave[i].name.contains(plants[i].name)){
+                    }
+                    else {
+                        mainViewModel.updateFb(listFbSave[i].copy(name = plants[i].name))
+                        mainViewModel.updateFb(listFbSave[i].copy(token = plants[i].token))
+                        idImageСurrent = listFbSave[i].idImage
+                        mainViewModel.deleteImage(idImageСurrent)
+
+                        val urlImage: URL = URL(plants[i].token)
+                        bitmap = urlImage.toBitmap()!!
+                        saveFbImg(plants[i].name, i+1000)
+
+                    }
+                }
+            }
+
+            else if (itemSizeSave == 0){
+                //копируем в бд
+                for(i in 1 .. itemSizeFb){
+                    mainViewModel.insertFb(
+                        FirebaseListItem(
+                            i,
+                            plants[i].name,
+                            plants[i].token,
+                            i+1000
+                        )
+                    )
+                    val urlImage: URL = URL(plants[i].token)
+                    bitmap = urlImage.toBitmap()!!
+                    saveFbImg(plants[i].name, i+1000)
+                }
+            }
+
+            else if (itemSizeSave>itemSizeFb){
+                //в облаке меньше данных чем в бд приложения просто сравниваем что есть, меняем
+                for (i in 1 .. itemSizeSave){
+                    if (i <= itemSizeFb){
+                        if (listFbSave[i].name.contains(plants[i].name)){
+                        }
+                        else{
+                            mainViewModel.updateFb(listFbSave[i].copy(name = plants[i].name))
+                            mainViewModel.updateFb(listFbSave[i].copy(token = plants[i].token))
+                            idImageСurrent = listFbSave[i].idImage
+                            mainViewModel.deleteImage(idImageСurrent)
+
+                            val urlImage: URL = URL(plants[i].token)
+                            bitmap = urlImage.toBitmap()!!
+                            saveFbImg(plants[i].name, i+1000)
+                        }
+                    }
+                    else{
+                        idImageСurrent = listFbSave[i].idImage
+                        mainViewModel.deleteImage(idImageСurrent)
+                        mainViewModel.deleteFb(i)
+
+                    }
+                }
+
+            }
+            else if (itemSizeSave<itemSizeFb){
+                //в облаке больще данных чем в бд приложения просто сравниваем что есть, меняем и добавляем новые
+                for (i in 1 .. itemSizeSave){
+                    if (i <= itemSizeSave){
+                        if (listFbSave[i].name.contains(plants[i].name)){
+                        }
+                        else{
+                            mainViewModel.updateFb(listFbSave[i].copy(name = plants[i].name))
+                            mainViewModel.updateFb(listFbSave[i].copy(token = plants[i].token))
+                            idImageСurrent = listFbSave[i].idImage
+                            mainViewModel.deleteImage(idImageСurrent)
+
+                            val urlImage: URL = URL(plants[i].token)
+                            bitmap = urlImage.toBitmap()!!
+                            saveFbImg(plants[i].name, i+1000)
+                        }
+                    }
+                    else{
+                        mainViewModel.insertFb(
+                            FirebaseListItem(
+                                null,
+                                plants[i].name,
+                                plants[i].token,
+                                i+1000
+                            )
+                        )
+                        val urlImage: URL = URL(plants[i].token)
+                        bitmap = urlImage.toBitmap()!!
+                        saveFbImg(plants[i].name, i+1000)
+                    }
+                }
+            }
+
+
+
+
+        }
     }
 
 
@@ -486,6 +653,7 @@ class MainActivity : BaseActivity() {
         private val PERMISSION_CODE = 1001
         var bitmapCheck = false
         var imageUri: Uri? = null
+        var plants = ArrayList<FirebaseItem>()
 
 
     }

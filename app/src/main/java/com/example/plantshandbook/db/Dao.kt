@@ -26,6 +26,7 @@ interface Dao {
     @Query("SELECT * FROM firebase_list")
     fun getAllFb(): LiveData<List<FirebaseListItem>>
 
+
     @Query("SELECT * FROM firebase_list")
     suspend fun getAllFbList(): List<FirebaseListItem>
 

@@ -3,6 +3,8 @@ package com.example.plantshandbook.utils
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.plantshandbook.activities.MainActivity.Companion.plants
+import com.example.plantshandbook.db.MainViewModel
 import com.example.plantshandbook.entities.FirebaseItem
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -15,15 +17,19 @@ import kotlinx.coroutines.runBlocking
 
 class FirebaseUtil() {
 
-    var plants = ArrayList<FirebaseItem>()
+    //var plants = ArrayList<FirebaseItem>()
     val db = FirebaseFirestore.getInstance()
+
     //val storage = Firebase.storage
 
+    /*
     val plantColName1 = "xVD6Q8LEwKJtHdPn5Pno"
     val plantColName2 = "HnNOPCswda5DG8M7PuxP"
     val plantColName3 = "wYsgajGdL4P60ATDisoe"
     val plantColName4 = "usObdR1rG5ElVnTu97aH"
     val plantColName5 = "OzKd7RUwUEdwVsqzzNs7"
+    */
+
 
     fun readDb() = runBlocking {
         launch{
@@ -44,6 +50,11 @@ class FirebaseUtil() {
         }
 
     }
+
+    companion object
+
+
+
 /*
     fun downloadFile(){
         readDb()

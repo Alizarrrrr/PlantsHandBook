@@ -7,12 +7,12 @@ import java.io.Serializable
 
 @Entity (tableName = "firebase_list")
 data class FirebaseListItem (
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey
     val id: Int? ,
     @ColumnInfo (name = "name")
     val name: String ,
     @ColumnInfo (name = "token")
     val token: String,
-    @ColumnInfo (name = "download_flag")
-    val download_flag: Boolean
+    @ColumnInfo (name = "idImage")
+    val idImage: Int
 ): Serializable

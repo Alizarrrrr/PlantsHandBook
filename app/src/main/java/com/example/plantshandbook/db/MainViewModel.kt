@@ -44,6 +44,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return roomSingleton.roomDAO().getAllStatList()
     }
 
+    suspend fun getAllFbList(): List<FirebaseListItem>{
+        return roomSingleton.roomDAO().getAllFbList()
+    }
+
     fun insertStat(item: StatItem) = viewModelScope.launch {
         roomSingleton.roomDAO().insertStat(item)
     }
